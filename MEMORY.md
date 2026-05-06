@@ -5,3 +5,4 @@
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 + §11 이력 동기 갱신 (코드와 docs drift 방지)
 - [Auto-sync memory to git](feedback_auto_sync_memory.md) — 메모리 변경 시 saugjong0521/claude_memory 로 자동 commit+push (Stop hook)
 - [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식으로 동작/책임 한 줄 같이
+- [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + 가능하면 컨펌
