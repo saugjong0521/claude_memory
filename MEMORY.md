@@ -3,3 +3,4 @@
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 다단계 phase 에서 사용자가 각 phase 마다 데이터·결정 입력, 자동 진행 금지
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 코드 작업 시작 전 프로젝트 `docs/000.*` 또는 `docs/00*` 확인 후 진행 (UI 라벨 의역 등 가드 정책 1차 참조)
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 + §11 이력 동기 갱신 (코드와 docs drift 방지)
+- [Auto-sync memory to git](feedback_auto_sync_memory.md) — 메모리 변경 시 saugjong0521/claude_memory 로 자동 commit+push (Stop hook)
