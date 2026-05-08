@@ -16,4 +16,5 @@ originSessionId: f0b3d85e-85ce-4fce-b620-5fc990ab1f6e
   - `/home/crypto/kstadium-referral-develop-backend` → `docs/000.harness_guide.md` (v2 정책 §13 + 가드 §10 18~24)
   - `/home/crypto/kstadium-referral-develop-frontend` → `docs/000.harness_guide.md` (UI 라벨 매핑 §4 + 카드 가시 조건 §3)
 - 트리비얼한 질문 (단순 명령어, 시각, 일반 정보) 에는 적용 안 해도 됨. 코드/정책 영향이 있는 작업에 한정.
-- 시간이 지나 docs/000 이 stale 할 수 있으니, 코드와 docs 가 충돌 시 코드를 신뢰하고 docs 를 갱신.
+- 시간이 지나 docs/000 이 stale 할 수 있으니, **status 표기 (✅/🔴/구현 완료/gap 등) 를 맹신하지 말고 코드 직접 grep 으로 재검증** ([feedback_docs_as_guide_code_as_truth](feedback_docs_as_guide_code_as_truth.md)). 코드와 docs 가 충돌 시 코드를 신뢰하고 docs 를 갱신.
+- docs 의 역할은 **"어디부터 읽을지" 안내** — 검증·테스트·status 확인은 코드 본문에서 진행.

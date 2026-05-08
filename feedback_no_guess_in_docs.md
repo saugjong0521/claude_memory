@@ -8,6 +8,8 @@ harness / 인덱스성 docs 의 표 형태 항목 (= 매트릭스, endpoint 인�
 
 **Why:** docs 끼리 cross-match (= FE docs ↔ BE docs / agent 요약 ↔ 응답 shape) 만 하면 둘 다 추상이라 코드 실 동작과 어긋날 수 있음. 한 번 잘못 적힌 매트릭스는 다음 작업자에게 misinformation 으로 작용. "import 만 보고 컴포넌트가 X endpoint 호출하는 듯" 추측은 호출 사이트 0 인 dead code 일 수 있고, "BE 응답이 processing 이면 비동기" 추측은 service 가 `await` 한 결과일 수 있고, "라우트 grep 안 보이면 BE 미존재" 단정은 `@Controller(prefix)` + `@Get(suffix)` 합성 못 잡았을 수 있음.
 
+**관련 룰**: 본 룰은 docs **작성 (write)** 측 — 매트릭스 / 인덱스 / status 표기 채울 때 코드 grep 기반. 반대 방향 — docs **사용 (read)** 시 status 표기 맹신 금지 룰은 [feedback_docs_as_guide_code_as_truth](feedback_docs_as_guide_code_as_truth.md). 두 룰이 "코드가 진실" 같은 원리의 write/read 양면.
+
 **How to apply (작성·갱신 직전):**
 
 1. **컴포넌트 / 모듈이 호출하는 endpoint 확인**: `grep -E "PATH\.[A-Z_]+|fetch[A-Z]\w+|axios\.|reveal[A-Z]\w+" <file>` — 결과 그대로 표에 옮김.
