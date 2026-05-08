@@ -9,3 +9,4 @@
 - [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + 가능하면 컨펌
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — `docs/000.*.md` 작성 시 §1 역할 → §2 한눈에 보기 → §3 시스템 흐름 → §4 시나리오 → §5+ 인덱스 → Gotchas 골격. 변경이력 섹션은 권장 O 이되 git commit 시점에만 1 entry (표 1행) append (작업 중간 X)
 - [docs 추측 금지, grep 으로만 채움](feedback_no_guess_in_docs.md) — 매트릭스/인덱스/카탈로그 표 작성 시 행마다 코드 grep + service 본문 read, docs cross-match 만으로 단정 X
+- [docs는 지침서, 코드가 진실](feedback_docs_as_guide_code_as_truth.md) — docs/하네스는 어디를 읽을지 안내하는 지침서로만 사용. 검증/테스트/status 확인은 코드 직접 read. docs 의 ✅/🔴 등 status 표기 맹신 금지
