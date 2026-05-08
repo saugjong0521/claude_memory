@@ -45,10 +45,10 @@ originSessionId: 3f2c3f1e-54e8-4e89-b366-494e814c2a7c
   4. 그 시점에 실제 변경 내용 기준으로 메시지 결정 → 컨펌 → commit
 - 이유: plan 단계에 미리 정하면 작업 도중 scope 변경 / 추가 발견 시 메시지가 부정확. 결과 본 후 정확한 메시지 작성 가능.
 
-## 자동화된 commit 도 동일 컨벤션 적용
+## 자동 hook commit 사용 X
 
-- Stop hook (메모리 자동 sync) 의 commit 메시지도 본 포맷 따름:
-  - `($(date +%Y%m%d)) update_memory` 형태로 (날짜 동적 + 일반 의미).
+- 과거 메모리 sync 용 Stop hook 이 자동 commit 했으나 컨펌 룰과 구조적 충돌로 2026-05-08 폐기.
+- 메모리 변경 포함 모든 commit 은 Claude 가 turn 안에서 메시지 제안 + 컨펌 + 직접 처리 ([feedback_auto_sync_memory.md](feedback_auto_sync_memory.md)).
 
 ## Why
 
