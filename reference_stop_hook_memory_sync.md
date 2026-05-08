@@ -39,7 +39,7 @@ originSessionId: 469e673c-f305-4b08-9202-16e3811f4952
         "hooks": [
           {
             "type": "command",
-            "command": "MDIR=$HOME/.claude/projects/<PROJECT_ID>/memory; if [ -d \"$MDIR/.git\" ] && [ -n \"$(cd \"$MDIR\" && git status --porcelain)\" ]; then cd \"$MDIR\" && git add -A && git commit -m \"auto: memory update $(date -Iseconds)\" >> $HOME/.claude/memory-sync.log 2>&1 && git push origin main >> $HOME/.claude/memory-sync.log 2>&1; fi"
+            "command": "MDIR=$HOME/.claude/projects/<PROJECT_ID>/memory; if [ -d \"$MDIR/.git\" ] && [ -n \"$(cd \"$MDIR\" && git status --porcelain)\" ]; then cd \"$MDIR\" && git add -A && git commit -m \"($(date +%Y%m%d)) update_memory\" >> $HOME/.claude/memory-sync.log 2>&1 && git push origin main >> $HOME/.claude/memory-sync.log 2>&1; fi"
           }
         ]
       }
@@ -65,7 +65,7 @@ originSessionId: 469e673c-f305-4b08-9202-16e3811f4952
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -Command \"$MDIR = \\\"$env:USERPROFILE\\.claude\\projects\\<PROJECT_ID>\\memory\\\"; if ((Test-Path \\\"$MDIR\\.git\\\") -and (git -C $MDIR status --porcelain)) { git -C $MDIR add -A; git -C $MDIR commit -m \\\"auto: memory update $((Get-Date).ToString('o'))\\\" *>> \\\"$env:USERPROFILE\\.claude\\memory-sync.log\\\"; git -C $MDIR push origin main *>> \\\"$env:USERPROFILE\\.claude\\memory-sync.log\\\" }\""
+            "command": "powershell -NoProfile -Command \"$MDIR = \\\"$env:USERPROFILE\\.claude\\projects\\<PROJECT_ID>\\memory\\\"; if ((Test-Path \\\"$MDIR\\.git\\\") -and (git -C $MDIR status --porcelain)) { git -C $MDIR add -A; git -C $MDIR commit -m \\\"($((Get-Date).ToString('yyyyMMdd'))) update_memory\\\" *>> \\\"$env:USERPROFILE\\.claude\\memory-sync.log\\\"; git -C $MDIR push origin main *>> \\\"$env:USERPROFILE\\.claude\\memory-sync.log\\\" }\""
           }
         ]
       }
