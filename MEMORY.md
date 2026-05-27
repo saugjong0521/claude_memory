@@ -8,8 +8,11 @@
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
-| **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, phase_progression_collaborative, explain_code_references |
-| **다단계 phase 작업** | phase_progression_collaborative |
+| **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
+| **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
+| **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal |
+| **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
+| **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
 | **Git commit (코드/docs)** | commit_message_format, commit_no_claude_coauthor |
 | **Git push** | git_push_confirm, commit_message_format |
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
@@ -21,6 +24,7 @@
 
 - [No Claude co-author in commits](feedback_commit_no_claude_coauthor.md) — omit `Co-Authored-By: Claude` trailer from all git commit messages
 - [Answer existence questions literally](feedback_answer_existence_questions_literally.md) — "있어?" 류에는 Yes/No 만 먼저, 구현은 명시적 지시 이후
+- [Read user words literally](feedback_read_user_words_literally.md) — "지금/현재/fresh/최신" 같은 시점·범위 키워드를 IDE 정황·기존 파일로 치환 금지 + "필요하면 별도로 말씀" 류 책임 회피 단서 금지
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 다단계 phase 에서 사용자가 각 phase 마다 데이터·결정 입력, 자동 진행 금지
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 코드 작업 시작 전 프로젝트 `docs/000.*` (3자리 prefix) 확인 후 진행 (UI 라벨 의역 등 가드 정책 1차 참조)
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 (§5/§6/§10/§11 + §13~§15 deep-dive 매트릭스) cross-section sync 갱신 (drift 방지)
@@ -34,3 +38,7 @@
 - [docs 추측 금지, grep 으로만 채움](feedback_no_guess_in_docs.md) — 매트릭스/인덱스/카탈로그 표 작성 시 행마다 코드 grep + service 본문 read, docs cross-match 만으로 단정 X. docs 사용 측 짝꿍 = docs_as_guide_code_as_truth
 - [docs는 지침서, 코드가 진실](feedback_docs_as_guide_code_as_truth.md) — docs/하네스는 어디를 읽을지 안내하는 지침서로만 사용. 검증/테스트/status 확인은 코드 직접 read. docs 의 ✅/🔴 등 status 표기 맹신 금지
 - [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — branch 전환 / `reset --hard` 가 옛 ref 의 tracked 였던 파일을 working tree 에서 자동 삭제. `.gitignore` 보호 무관. checkout/reset 전 `.env*`/secret 백업 + Claude 의 일반화 단정 금지
+- [vip_membership_event 최신 행은 MAX(id) 금지](feedback_vip_event_ordering_not_max_id.md) — kstadium-referral-backend 의 VIP 현황 SQL 은 `(effective_at, block_number, log_index, id) DESC` 정렬 필수. MAX(id) 만 쓰면 manual/auto 행 순서 뒤집힘
+- [사용자 결정은 자연어 quote 로 보존](feedback_preserve_decision_literal.md) — AskUserQuestion 선택지 label 만으로 본질 의도 추적 부족. plan doc § 안에 사용자 원문 quote
+- [이미 결정된 사항 반복 질문 금지](feedback_no_repeat_decided_questions.md) — "안전한 척" 모든 분기 묻기 금지. 기존 정책의 자동 적용은 자체 판단 + 한 줄 안내
+- [분류 SQL 은 모든 sanity check 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md) — 카테고리 분류 시 exclusion / pre_genesis / balance_row / 등 모든 영향 컬럼 한 SELECT 에. 부분 query 단정 금지
