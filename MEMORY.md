@@ -44,3 +44,4 @@
 - [이미 결정된 사항 반복 질문 금지](feedback_no_repeat_decided_questions.md) — "안전한 척" 모든 분기 묻기 금지. 기존 정책의 자동 적용은 자체 판단 + 한 줄 안내
 - [분류 SQL 은 모든 sanity check 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md) — 카테고리 분류 시 exclusion / pre_genesis / balance_row / 등 모든 영향 컬럼 한 SELECT 에. 부분 query 단정 금지
 - [Frontend / Backend cross-check 매트릭스 (변경 전)](feedback_cross_repo_audit_before_changes.md) — 양쪽 영향 변경 시 endpoint method+path 매트릭스 + ADMIN_PATH 사용 + helper method coverage + 직접 호출 4 차원 점검. trial-and-error 금지
+- [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 글로벌 memory dir 는 Claude 의 일반 process/생각/선호(feedback 룰)만. 프로젝트 고유 사실(테스트 실행법·구조·정책)은 해당 repo(docs/000 하네스·README 등)에 기록
