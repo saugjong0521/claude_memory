@@ -38,3 +38,5 @@ originSessionId: 469e673c-f305-4b08-9202-16e3811f4952
 | 3 | 사용자 지적 받기 전까지 잘못된 정보 그대로 docs/016 작성 | 매트릭스 작성 전에 행마다 코드 검증 (§4 룰) |
 
 **핵심**: docs 는 **출발점** (어디 읽을지), 코드는 **종착점** (실제 동작). 이 순서를 뒤집지 말 것.
+
+**런타임 확장**: 실행 중 서비스 (재시작/중지/리로드/기동) 는 repo 의 스크립트/Makefile/Dockerfile 이 아니라 라이브 supervisor (systemd 등) 가 진실 → [feedback_verify_runtime_supervisor_before_restart](feedback_verify_runtime_supervisor_before_restart.md).
