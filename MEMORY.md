@@ -9,6 +9,7 @@
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
 | **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
+| **손해/낭비/실패 원인 질문 응답** (= "왜 이만큼 들었/느렸/깨졌냐") | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
 | **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal |
 | **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
@@ -48,5 +49,6 @@
 - [Frontend / Backend cross-check 매트릭스 (변경 전)](feedback_cross_repo_audit_before_changes.md) — 양쪽 영향 변경 시 endpoint method+path 매트릭스 + ADMIN_PATH 사용 + helper method coverage + 직접 호출 4 차원 점검. trial-and-error 금지
 - [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 글로벌 memory dir 는 Claude 의 일반 process/생각/선호(feedback 룰)만. 프로젝트 고유 사실(테스트 실행법·구조·정책)은 해당 repo(docs/000 하네스·README 등)에 기록
 - [발견·코드 설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — file:line 인용에 그치지 말고 비즈니스 의미 + 시나리오/숫자 트레이스 + 유저·사측 영향으로 설명. 코드 변경 제안도 동일
+- [손해 질문엔 계측 아닌 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "왜 낭비/손해/실패했냐"엔 "숫자는 맞으니 정상"으로 시스템 변호 금지. 그 결과가 정당했는지를 먼저. "재현됨≠올바름". (2026-06-12 토큰폭주 조사서 내가 범한 오판)
 - [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. docs_as_guide_code_as_truth 의 런타임 확장
 - [대규모 에이전트 fan-out 전 컨펌 + 규모 상한](feedback_confirm_before_large_agent_fanout.md) — **단일 작업 에이전트 ≤ 5시간 창의 ~30%(≈10~15개)**. ≳10 fan-out 전 예상 규모 고지+컨펌. 모델·모드(Fable+ultracode) 무죄, 개수가 문제. 1:1 검증 금지→묶음. 에이전트 필요성 선판단(repo가 한 컨텍스트면 main loop). 실측: 빈 창 천장 ~2.34M, 16ag=34%/52ag=110%크래시 (2026-06-12 사고+재현). **판정=제품관점 설계버그(회계만 정상), "재현됨≠올바름". "정상이라 괜찮다" 금지 — 능동 방어 필요.** 전체 분석 = `docs/claude_session_token_analysis_20260612.md`
