@@ -19,6 +19,7 @@
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
 | **RDBMS sync 코드 작성** (UPSERT / INSERT) | rdbms_upsert_autoinc |
 | **실행 중 서비스 운영** (재시작/중지/리로드/배포·프로세스 상태 확인) | verify_runtime_supervisor_before_restart, docs_as_guide_code_as_truth |
+| **멀티에이전트 워크플로 실행** (= Workflow / 대량 Agent fan-out) | confirm_before_large_agent_fanout |
 | **메모리 변경 commit** | auto_sync_memory, commit_message_format, commit_no_claude_coauthor |
 | **새 PC memory 셋업** | reference_memory_git_setup, auto_sync_memory |
 
@@ -48,3 +49,4 @@
 - [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 글로벌 memory dir 는 Claude 의 일반 process/생각/선호(feedback 룰)만. 프로젝트 고유 사실(테스트 실행법·구조·정책)은 해당 repo(docs/000 하네스·README 등)에 기록
 - [발견·코드 설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — file:line 인용에 그치지 말고 비즈니스 의미 + 시나리오/숫자 트레이스 + 유저·사측 영향으로 설명. 코드 변경 제안도 동일
 - [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. docs_as_guide_code_as_truth 의 런타임 확장
+- [대규모 에이전트 fan-out 전 컨펌 + 규모 상한](feedback_confirm_before_large_agent_fanout.md) — **단일 작업 에이전트 ≤ 5시간 창의 ~30%(≈10~15개)**. ≳10 fan-out 전 예상 규모 고지+컨펌. 모델·모드(Fable+ultracode) 무죄, 개수가 문제. 1:1 검증 금지→묶음. 에이전트 필요성 선판단(repo가 한 컨텍스트면 main loop). 실측: 빈 창 천장 ~2.34M, 16ag=34%/52ag=110%크래시 (2026-06-12 사고+재현). 전체 분석 = `docs/claude_session_token_analysis_20260612.md`
