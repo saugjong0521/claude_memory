@@ -4,7 +4,7 @@ description: 메모리 변경은 Claude 가 turn 안에서 diff 기반 메시지
 type: feedback
 originSessionId: 3f2c3f1e-54e8-4e89-b366-494e814c2a7c
 ---
-현재 PC 의 메모리 디렉토리 (`~/.claude/projects/<project-id>/memory/`, 예: 리눅스 `-home-crypto`, Mac `-Users-brandon`) 변경은 saugjong0521/claude_memory.git 으로 commit + push.
+현재 PC 의 장기 메모리 디렉토리 (`~/.claude/claude_memory/`) 변경은 saugjong0521/claude_memory.git 으로 commit + push. (구조: [reference_memory_git_setup.md](reference_memory_git_setup.md) — 장기는 프로젝트 폴더 `projects/<id>/memory/` 가 아니라 `~/.claude/claude_memory/` 에 둠)
 
 **Why:** 사용자가 여러 PC 에서 동일한 메모리 컨텍스트를 사용하기 위해 GitHub 동기화. commit 메시지는 변경 내용을 반영해야 하고 컨펌이 필요함 ([feedback_commit_message_format.md](feedback_commit_message_format.md) §"컨펌 정책"). 자동 hook 은 turn 종료 시점에 fire 하는데 그 시점이 곧 사용자 응답 대기 시점이라 컨펌 받을 기회가 없음 → **hook 비활성, Claude 가 매번 직접 처리**.
 
