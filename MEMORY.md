@@ -33,7 +33,7 @@
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 코드 작업 시작 전 프로젝트 `docs/000.*` (3자리 prefix) 확인 후 진행 (UI 라벨 의역 등 가드 정책 1차 참조)
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 (§5/§6/§10/§11 + §13~§15 deep-dive 매트릭스) cross-section sync 갱신 (drift 방지)
 - [Sync memory to git (manual)](feedback_auto_sync_memory.md) — 메모리 변경은 Claude 가 diff 기반 메시지 제안+컨펌+직접 commit+push. Stop hook 사용 X (컨펌 룰과 충돌)
-- [메모리 구조 + git sync 셋업 (새 PC)](reference_memory_git_setup.md) — 장기/중기/단기 3계층 구조 + 장기 메모리를 `~/.claude/claude_memory/` + `~/.claude/CLAUDE.md` 로 셋업·sync (옛 `projects/<id>/memory/` 방식 폐기). hook 사용 X
+- [메모리 구조 + git sync 셋업 (리눅스/Mac/Windows)](reference_memory_git_setup.md) — 장기/중기/단기 3계층 구조 + 장기 메모리를 `~/.claude/claude_memory/` + `~/.claude/CLAUDE.md`(@import) 로 셋업·sync. **3 OS 공통** (`~/.claude/` 동일, Git Bash 권장 / Windows 네이티브는 `%USERPROFILE%`). 옛 `projects/<id>/memory/` 방식 폐기 — 마이그레이션 시 중복 로드 주의. hook 사용 X
 - [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식. commit message 는 예외 (짧은 형식 유지)
 - [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
 - [Git push 시 사용자 confirm 받기](feedback_git_push_confirm.md) — commit 까지는 자동 OK, push 전엔 반드시 컨펌. 자발적 push 금지 (= remote 영향 + revert 어려움)

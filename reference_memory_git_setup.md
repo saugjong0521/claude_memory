@@ -1,6 +1,6 @@
 ---
-name: 메모리 구조 + git sync 셋업 (새 PC)
-description: Claude 메모리 3계층(장기/중기/단기) 구조와, 장기 메모리를 ~/.claude/claude_memory/ + ~/.claude/CLAUDE.md 로 셋업해 saugjong0521/claude_memory.git 과 sync 시키는 절차. Stop hook 사용 X
+name: 메모리 구조 + git sync 셋업 (리눅스/macOS/Windows)
+description: Claude 메모리 3계층(장기/중기/단기) 구조와, 장기 메모리를 ~/.claude/claude_memory/ + ~/.claude/CLAUDE.md(@import) 로 셋업해 saugjong0521/claude_memory.git 과 sync. 리눅스·macOS·Windows 공통. Stop hook 사용 X
 type: reference
 originSessionId: 469e673c-f305-4b08-9202-16e3811f4952
 ---
@@ -23,11 +23,19 @@ Claude 의 메모리는 수명·범위에 따라 3계층으로 나뉜다. **장�
 
 ---
 
-# 목적
+# OS별 경로 — 핵심: `~/.claude/` 는 3 OS 공통
 
-새 PC 에서 **장기 메모리**를 `~/.claude/claude_memory/` 로 clone 하고 `~/.claude/CLAUDE.md` 가 그 인덱스를 import 하게 만들어, 모든 세션에서 자동 적용 + 다중 PC sync 가능하게 셋업.
+Claude Code 는 리눅스·macOS·Windows 모두에서 홈의 `.claude/` 를 인식한다. 경로 표기만 다르고 구조는 동일.
 
-commit + push 는 Stop hook 자동화 없이 Claude 가 turn 안에서 직접 처리 (컨펌 받고) — 룰: [feedback_auto_sync_memory.md](feedback_auto_sync_memory.md).
+| OS | 홈 디렉토리 | 장기 메모리 clone 위치 | 전역 CLAUDE.md |
+|----|-----------|----------------------|----------------|
+| **Linux** | `/home/<user>` | `~/.claude/claude_memory/` | `~/.claude/CLAUDE.md` |
+| **macOS** | `/Users/<user>` | `~/.claude/claude_memory/` | `~/.claude/CLAUDE.md` |
+| **Windows** | `C:\Users\<user>` | `%USERPROFILE%\.claude\claude_memory\`<br>(Git Bash: `~/.claude/claude_memory/`) | `%USERPROFILE%\.claude\CLAUDE.md` |
+
+- **Git Bash 를 쓰면 3 OS 모두 `~/.claude/...` 동일 명령** 이 된다 (권장).
+- Windows PowerShell/cmd 네이티브는 `%USERPROFILE%` 또는 `$HOME` 사용.
+- CLAUDE.md 안의 `@claude_memory/MEMORY.md` 는 **OS 무관** — Claude Code 가 **CLAUDE.md 파일 위치 기준 상대경로**로 해석하므로 `~/.claude/claude_memory/MEMORY.md` 로 풀린다 (import 최대 depth 4, 우리는 1단계).
 
 > ⚠️ **옛 방식 폐기**: 과거에는 repo 를 `~/.claude/projects/<PROJECT_ID>/memory/` (프로젝트 폴더) 안에 clone 했으나, 그건 장기(글로벌) 메모리를 프로젝트 폴더에 중복으로 박아 넣는 구조라 폐기. 이제 **글로벌 위치 1곳(`~/.claude/claude_memory/`)** 에만 두고 `CLAUDE.md` 로 로드한다.
 
@@ -35,24 +43,33 @@ commit + push 는 Stop hook 자동화 없이 Claude 가 turn 안에서 직접 �
 
 # 셋업 절차 (PC 1대당 1회)
 
-## 1. git clone (글로벌 위치)
+## A. Linux / macOS / Windows(Git Bash) — 공통
 
 ```bash
+# 1) 글로벌 위치로 clone
 git clone https://github.com/saugjong0521/claude_memory.git ~/.claude/claude_memory
-```
-(Windows: `%USERPROFILE%\.claude\claude_memory`)
 
-## 2. git config (메모리 repo 로컬)
-
-```bash
-git -C ~/.claude/claude_memory config user.name "saugjong0521"
+# 2) 메모리 repo 로컬 config (author 일관성 — 글로벌 git config 와 별도)
+git -C ~/.claude/claude_memory config user.name  "saugjong0521"
 git -C ~/.claude/claude_memory config user.email "saugjong0521@gmail.com"
+
+# 3) ~/.claude/CLAUDE.md 작성 (아래 § "CLAUDE.md 내용")
+# 4) 인증 설정 (아래 § 인증)
+# 5) 새 세션에서 /memory 로 검증
 ```
-(글로벌 git config 와 별도로 메모리 repo 로컬 config 설정 — author 일관성 유지)
 
-## 3. ~/.claude/CLAUDE.md 작성 (글로벌 로드)
+## B. Windows PowerShell (네이티브) — 경로만 다름
 
-`~/.claude/CLAUDE.md` (Windows: `%USERPROFILE%\.claude\CLAUDE.md`) 가 메모리 인덱스를 import 하게 한다. Claude Code 는 이 파일을 모든 프로젝트·세션에서 자동 로드한다:
+```powershell
+git clone https://github.com/saugjong0521/claude_memory.git "$env:USERPROFILE\.claude\claude_memory"
+git -C "$env:USERPROFILE\.claude\claude_memory" config user.name  "saugjong0521"
+git -C "$env:USERPROFILE\.claude\claude_memory" config user.email "saugjong0521@gmail.com"
+# 편집 대상: "$env:USERPROFILE\.claude\CLAUDE.md"
+```
+
+## CLAUDE.md 내용 (3 OS 동일)
+
+`~/.claude/CLAUDE.md` (Windows: `%USERPROFILE%\.claude\CLAUDE.md`) — Claude Code 가 모든 프로젝트·세션에서 자동 로드:
 
 ```markdown
 # 장기 메모리 (전역 지침)
@@ -65,29 +82,48 @@ git -C ~/.claude/claude_memory config user.email "saugjong0521@gmail.com"
 
 (`@claude_memory/MEMORY.md` 는 `CLAUDE.md` 기준 상대경로 → `~/.claude/claude_memory/MEMORY.md` 로 해석됨. MEMORY.md 가 인덱스이고, 개별 `feedback_*` 룰은 필요 시 read.)
 
-## 4. 인증
+## 인증 (push 가능해야 함)
 
-push 가능해야 함. 둘 중 하나:
-
+둘 중 하나:
 - **SSH key**: GitHub 에 SSH key 등록 + remote 를 SSH URL 로 변경
   ```bash
   git -C ~/.claude/claude_memory remote set-url origin git@github.com:saugjong0521/claude_memory.git
   ```
 - **HTTPS + PAT**: GitHub Personal Access Token 발급 → credential helper 사용 또는 remote URL 에 embed
 
-## 5. settings.json
+## settings.json
 
 `~/.claude/settings.json` 에 **Stop hook 추가하지 말 것**. 자동 commit 은 컨펌 룰 ([feedback_commit_message_format.md](feedback_commit_message_format.md)) 과 충돌해서 2026-05-08 폐기됨. (settings.json 자체는 PC 마다 별도 — sync 대상 아님)
+
+---
+
+# ⚠️ 옛 방식에서 마이그레이션 — 중복 로드 주의
+
+`~/.claude/CLAUDE.md`(@import) 와 옛 `~/.claude/projects/<id>/memory/`(auto-memory) 는 **별개 메커니즘이라 둘 다 로드된다**. 옛 방식에서 넘어올 땐 **옛 위치를 비워야** 같은 룰이 2번 안 실린다.
+
+```bash
+# 현재 repo(최신 상태)를 글로벌 위치로 이동 → 옛 위치 자동으로 비움
+mv ~/.claude/projects/<PROJECT_ID>/memory ~/.claude/claude_memory
+# 이후 git config 재확인 + ~/.claude/CLAUDE.md 작성
+```
+(이미 로드된 현재 세션은 영향 없고, **다음 세션부터** 새 방식 적용.)
 
 ---
 
 # 적용 후 검증
 
 1. `~/.claude/claude_memory/MEMORY.md` 존재 + `~/.claude/CLAUDE.md` 에 `@claude_memory/MEMORY.md` import 라인 확인
-2. 새 세션에서 장기 메모리 룰이 로드되는지 확인 (안 실리면 그 하네스가 `CLAUDE.md` 글로벌 로드를 안 하는 것 → 대체 방식 필요)
+2. **새 세션에서 `/memory` 실행** → "User instructions" 에 `~/.claude/CLAUDE.md` + import 된 `claude_memory/MEMORY.md` 가 보이면 성공. (안 보이면 그 하네스가 글로벌 CLAUDE.md 로드를 안 하는 것 → 대체 방식 필요)
 3. 메모리 파일 임시 수정 → Claude 한테 commit 처리 요청 → diff 기반 메시지 제안 + 컨펌 → push
 4. GitHub `saugjong0521/claude_memory` main 에 새 commit 도착 확인
 5. 다른 PC 에서 `git -C ~/.claude/claude_memory pull` → 변경사항 도착 확인
+
+---
+
+# 다중 PC sync
+
+- **저장(변경)**: Claude 가 turn 안에서 diff 기반 commit 메시지 제안 + 컨펌 + 직접 commit + push (Stop hook 자동화 X) — 룰: [feedback_auto_sync_memory.md](feedback_auto_sync_memory.md).
+- **가져오기**: `git -C ~/.claude/claude_memory pull` (각 PC).
 
 ---
 
@@ -95,5 +131,6 @@ push 가능해야 함. 둘 중 하나:
 
 - **push 실패 (auth)**: `Permission denied` / `403` → SSH key 또는 PAT 재확인
 - **commit author 가 다른 이름**: `git -C ~/.claude/claude_memory config user.name/email` 재설정 (글로벌과 별도)
-- **git not found (Windows)**: PATH 에 `git.exe` 등록 필요 (Git for Windows 설치)
-- **장기 룰이 세션에 안 실림**: `~/.claude/CLAUDE.md` 가 그 하네스의 글로벌 메모리 파일로 로드되는지 확인. 프로젝트 폴더(`projects/<id>/memory/`)에 다시 넣는 옛 방식으로 회귀하지 말 것 — 중복·drift 원인.
+- **git not found (Windows)**: PATH 에 `git.exe` 등록 필요 (Git for Windows 설치 → Git Bash 사용 권장)
+- **장기 룰이 세션에 안 실림**: `~/.claude/CLAUDE.md` 가 그 하네스의 글로벌 메모리 파일로 로드되는지 `/memory` 로 확인. 프로젝트 폴더(`projects/<id>/memory/`)에 다시 넣는 옛 방식으로 회귀하지 말 것 — 중복·drift 원인.
+- **중복 로드**: 마이그레이션 후 옛 `projects/<id>/memory/` 를 안 비우면 같은 룰 2번 로드 → 옛 위치 정리.
