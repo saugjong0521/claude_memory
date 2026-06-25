@@ -5,7 +5,7 @@
 | Process | Read 필요 파일 |
 |---------|----------------|
 | **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally |
-| **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs |
+| **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
 | **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
@@ -15,6 +15,7 @@
 | **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
 | **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
 | **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
+| **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes |
 | **Git commit (코드/docs)** | commit_message_format, commit_no_claude_coauthor |
 | **Git push** | git_push_confirm, commit_message_format |
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
@@ -51,4 +52,5 @@
 - [발견·코드 설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — file:line 인용에 그치지 말고 비즈니스 의미 + 시나리오/숫자 트레이스 + 유저·사측 영향으로 설명. 코드 변경 제안도 동일
 - [손해 질문엔 계측 아닌 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "왜 낭비/손해/실패했냐"엔 "숫자는 맞으니 정상"으로 시스템 변호 금지. 그 결과가 정당했는지를 먼저. "재현됨≠올바름". (2026-06-12 토큰폭주 조사서 내가 범한 오판)
 - [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. docs_as_guide_code_as_truth 의 런타임 확장
+- [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
 - [대규모 에이전트 fan-out 전 컨펌 + 규모 상한](feedback_confirm_before_large_agent_fanout.md) — **단일 작업 에이전트 ≤ 5시간 창의 ~30%(≈10~15개)**. ≳10 fan-out 전 예상 규모 고지+컨펌. 모델·모드(Fable+ultracode) 무죄, 개수가 문제. 1:1 검증 금지→묶음. 에이전트 필요성 선판단(repo가 한 컨텍스트면 main loop). 실측: 빈 창 천장 ~2.34M, 16ag=34%/52ag=110%크래시 (2026-06-12 사고+재현). **판정=제품관점 설계버그(회계만 정상), "재현됨≠올바름". "정상이라 괜찮다" 금지 — 능동 방어 필요.** 전체 분석 = `docs/claude_session_token_analysis_20260612.md`
