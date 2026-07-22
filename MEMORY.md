@@ -36,7 +36,7 @@
 - [Sync memory to git (manual)](feedback_auto_sync_memory.md) — 메모리 변경은 Claude 가 diff 기반 메시지 제안+컨펌+직접 commit+push. Stop hook 사용 X (컨펌 룰과 충돌)
 - [메모리 구조 + git sync 셋업 (리눅스/Mac/Windows)](reference_memory_git_setup.md) — 장기/중기/단기 3계층 구조 + 장기 메모리를 `~/.claude/claude_memory/` + `~/.claude/CLAUDE.md`(@import) 로 셋업·sync. **3 OS 공통** (`~/.claude/` 동일, Git Bash 권장 / Windows 네이티브는 `%USERPROFILE%`). 옛 `projects/<id>/memory/` 방식 폐기 — 마이그레이션 시 중복 로드 주의. hook 사용 X
 - [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식. commit message 는 예외 (짧은 형식 유지)
-- [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
+- [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` **영어 문구** + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
 - [Git push 시 사용자 confirm 받기](feedback_git_push_confirm.md) — commit 까지는 자동 OK, push 전엔 반드시 컨펌. 자발적 push 금지 (= remote 영향 + revert 어려움)
 - [RDBMS UPSERT 시 AUTO_INCREMENT 폭발 주의](feedback_rdbms_upsert_autoinc.md) — `INSERT ... ON DUPLICATE KEY UPDATE` 또는 `ON CONFLICT` 가 UPDATE 분기에서도 AUTO_INC +1 소비 → 빈도 높은 sync 코드면 변경 감지 분기 권장
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — `docs/000.*.md` 작성 시 §1 역할 → §2 한눈에 보기 → §3 시스템 흐름 → §4 시나리오 → §5+ 인덱스 → Gotchas 골격. 변경이력 섹션은 권장 O 이되 git commit 시점에만 1 entry (표 1행) append (작업 중간 X)

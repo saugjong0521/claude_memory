@@ -1,6 +1,6 @@
 ---
 name: Commit message 포맷 컨벤션
-description: 모든 commit 메시지는 `(yyyymmdd) 동사_내용` 형식 + - / _ 규칙 + 다중 변경은 콤마 구분 + Claude co-author 미포함 + **반드시 커밋 전 사용자 컨펌 받기**
+description: 모든 commit 메시지는 `(yyyymmdd) 동사_내용` 형식 (영어 문구) + - / _ 규칙 + 다중 변경은 콤마 구분 + Claude co-author 미포함 + **반드시 커밋 전 사용자 컨펌 받기**
 type: feedback
 originSessionId: 3f2c3f1e-54e8-4e89-b366-494e814c2a7c
 ---
@@ -18,17 +18,18 @@ originSessionId: 3f2c3f1e-54e8-4e89-b366-494e814c2a7c
 
 1. **날짜 prefix**: `(yyyymmdd)` — 8자리 (예: `(20260506)`).
 2. **동사**: `update`, `add`, `fix`, `remove` 등 변경 의도 동사로 시작.
-3. **구분자**:
+3. **언어: 영어** — 메시지 문구 (동사·내용) 는 영어로 작성. 한글 미사용 (2026-07-22 사용자 지시 "commit문구는 영어로").
+4. **구분자**:
    - `-` (하이픈): 의미가 **이어지는** 단어 사이 — 한 개념을 표현
      - 예: `mail-address`, `vip-username-column`, `from-db`, `member-db_full-sync-logic`
    - `_` (언더스코어): 의미가 **안 이어지는** 단어 사이 — 다른 영역 구분
      - 예: `update_mail-address` (동사 ↔ 대상)
      - 예: `remove_vip-username-column_from-db` (동사 ↔ 대상 ↔ 위치)
-4. **수준**: 적당히 — "어떤 내용이 변경됐는지" 알 수 있는 정도. 너무 짧거나 너무 세세하지 않게.
-5. **다중 변경**: 한 commit 에 2개 이상의 변경이 묶이면 콤마(`,`) 로 구분
+5. **수준**: 적당히 — "어떤 내용이 변경됐는지" 알 수 있는 정도. 너무 짧거나 너무 세세하지 않게.
+6. **다중 변경**: 한 commit 에 2개 이상의 변경이 묶이면 콤마(`,`) 로 구분
    - 예: `(20260506) update_alert-logic, fix_deposit-sync-multiple_error`
    - 예: `(20260506) add_commit-message-convention, update_auto-sync-hook`
-6. **Co-Authored-By: Claude 미포함** (별도 메모리 룰: feedback_commit_no_claude_coauthor).
+7. **Co-Authored-By: Claude 미포함** (별도 메모리 룰: feedback_commit_no_claude_coauthor).
 
 ## 컨펌 정책 (= 의무)
 
