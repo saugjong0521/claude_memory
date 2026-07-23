@@ -27,3 +27,6 @@ originSessionId: 552687bc-ce8e-4bce-96e7-4e732ad1fbd9
    - 비대칭 증거 수집 = 확증 파일은 읽고 인접한 싼 반증 파일은 건너뛰기.
 
 5. **mutation 전 supervisor 정책 확인**: 재시작/중지 처방 전 supervisor 의 restart 정책 (`Restart=always` 등) 확인. 수동 stop/start 는 supervisor 가 없다고 **positive 확인된 경우에만**; 있으면 supervisor-native 명령 (`systemctl restart` 등) 사용.
+
+6. **수동(비-supervisor) 프로세스를 재기동할 때는 명령뿐 아니라 env 까지 복제**: cmdline 만 복제해 다시 띄우면 원 기동 절차의 **환경 정리 (unset/export) 가 누락**될 수 있다. `/proc/PID/environ` 이 안 읽히면 repo 의 기동/배포 스크립트 (`scripts/deploy_*.sh` 등) 에 env 격리 절차가 내장돼 있는지 확인하고 **그 스크립트로 재기동**하는 게 기본값.
+   - **Why (2026-07-23 사고)**: kstadium-shop dev 서버를 수동 `nohup uvicorn` 으로 3회 재시작 — 정식 절차 `scripts/deploy_dev.sh` 의 `unset KSTA_RPC_URL` (= `~/.bashrc` 전역 mainnet export 가 `.env.dev` 를 덮는 것 차단) 을 우회 → 잔액 조회가 mainnet 으로 가서 "집금지갑 0 KSTA" 오판, 사용자가 지급 실패로 발견. **07-22 에 이미 문서화된 사고의 재발** — docs/000 §7 을 읽지 않고 재기동한 것이 원인. rule 1 (docs 는 supervisor 가 아니다) 과 모순 아님: supervisor 식별은 라이브가 진실이되, **기동 "절차" (env 정리 포함) 는 repo 스크립트가 담고 있을 수 있다** — 둘 다 확인.
