@@ -5,7 +5,8 @@
 | Process | Read 필요 파일 |
 |---------|----------------|
 | **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally |
-| **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization |
+| **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization, no_handtyped_dates_echo_inputs_on_empty |
+| **날짜/연도 들어가는 쿼리·스크립트 작성** | no_handtyped_dates_echo_inputs_on_empty |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
 | **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
@@ -55,4 +56,5 @@
 - [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. **수동 프로세스 재기동 시 cmdline 만 복제 금지 — env 격리 (unset 등) 포함한 repo 기동 스크립트로** (2026-07-23 KSTA_RPC_URL mainnet 오염 재발). **sudo 필요한 재기동은 kill-PID 우회 금지 — 배포까지만 하고 명령 제시 후 사용자 핸드오프** (2026-08-05). docs_as_guide_code_as_truth 의 런타임 확장
 - ["없다/불가능" 단정 전 생태계 최신 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치된 버전의 한계 ≠ 세상에 없음. "~방법 없니?" 질문엔 공식 docs·후속 라이브러리 웹검색 먼저 (2026-07-22 metamask connect-evm 놓친 사건)
 - [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
+- [날짜 리터럴 직접 타이핑 금지 + 빈 결과는 입력 echo 먼저](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도/월은 시스템 날짜에서 파생 (학습 분포 탓 2025 미끄러짐 반복). "성공+빈 결과"면 외부 원인 가설 전에 내가 보낸 파라미터 echo 검증 (2026-08-07 NCP 202507 오타 → 오진 사건)
 - [에이전트 fan-out 은 토큰 3구간 + 작업 체인 누적 판정](feedback_confirm_before_large_agent_fanout.md) — 판정은 개수 아닌 **예상 토큰 3구간 (≤20만 자유 / ≤60만 한줄고지 / >60만 컨펌)** + **판정 단위 = 배치 1개가 아니라 작업 체인 누적** (워크플로 끝날 때마다 실측 totalTokens 합산해 재판정). 무거운 에이전트 ≈4.5~5만/개, **검증류는 ~9만/개** (휴리스틱 2배). 1:1 검증은 상한 안에서만, 무상한 fan-out 구조 금지, 필요성 선판단(한 컨텍스트면 main loop). 사고 2건: 2026-06-12 (52ag=234만 크래시) + **2026-07-02 (≤10개짜리 워크플로 3연속 = 누적 127.5만 = 개수 룰 전부 통과하고도 세션 한도 소진 — 배치 단위 판정이 구멍)**. "재현됨≠올바름", "정상이라 괜찮다" 금지 — 사전 고지+누적 상한으로 능동 방어
