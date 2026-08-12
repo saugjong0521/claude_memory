@@ -4,12 +4,15 @@
 
 | Process | Read 필요 파일 |
 |---------|----------------|
-| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally |
+| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting |
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization, no_handtyped_dates_echo_inputs_on_empty |
 | **날짜/연도 들어가는 쿼리·스크립트 작성** | no_handtyped_dates_echo_inputs_on_empty |
-| **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
+| **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references, verify_edit_applied_before_reporting |
+| **대량 기계적 변경** (= 코드 블록 일괄 삭제 / 정규식 치환 / 파일 분할) | verify_edit_applied_before_reporting, no_single_source_generalization |
+| **계획 문서대로 항목 착수** (= 내가 쓴 스펙 실행) | docs_as_guide_code_as_truth, no_guess_in_docs |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
 | **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
+| **발견·이상 보고** (= 조사 결과 사용자에게 알림) | no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **"없다/불가능" 답변** (기능·방법 부재 단정) | verify_ecosystem_before_saying_impossible, no_single_source_generalization |
 | **손해/낭비/실패 원인 질문 응답** (= "왜 이만큼 들었/느렸/깨졌냐") | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
@@ -43,6 +46,7 @@
 - [RDBMS UPSERT 시 AUTO_INCREMENT 폭발 주의](feedback_rdbms_upsert_autoinc.md) — `INSERT ... ON DUPLICATE KEY UPDATE` 또는 `ON CONFLICT` 가 UPDATE 분기에서도 AUTO_INC +1 소비 → 빈도 높은 sync 코드면 변경 감지 분기 권장
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — `docs/000.*.md` 작성 시 §1 역할 → §2 한눈에 보기 → §3 시스템 흐름 → §4 시나리오 → §5+ 인덱스 → Gotchas 골격. 변경이력 섹션은 권장 O 이되 git commit 시점에만 1 entry (표 1행) append (작업 중간 X)
 - [docs 추측 금지, grep 으로만 채움](feedback_no_guess_in_docs.md) — 매트릭스/인덱스/카탈로그 표 작성 시 행마다 코드 grep + service 본문 read, docs cross-match 만으로 단정 X. docs 사용 측 짝꿍 = docs_as_guide_code_as_truth
+- [편집 적용 확인 후 보고 + 대량 삭제는 파서로](feedback_verify_edit_applied_before_reporting.md) — 치환/삭제는 **재조회로 적용 확인 후** 보고 (무조건 실행되는 `print("✅")` 금지, `assert` 로 앵커 부재 시 실패). 대량 삭제는 정규식 대신 **괄호 균형 파서** + 백업 + 린터·빌드·**런타임 대조** 3중 확인 (2026-08-12 미적용 편집 오보 + mockAdapter 2회 파손)
 - [docs는 지침서, 코드가 진실](feedback_docs_as_guide_code_as_truth.md) — docs/하네스는 어디를 읽을지 안내하는 지침서로만 사용. 검증/테스트/status 확인은 코드 직접 read. docs 의 ✅/🔴 등 status 표기 맹신 금지
 - [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — branch 전환 / `reset --hard` 가 옛 ref 의 tracked 였던 파일을 working tree 에서 자동 삭제. `.gitignore` 보호 무관. checkout/reset 전 `.env*`/secret 백업 + Claude 의 일반화 단정 금지
 - [vip_membership_event 최신 행은 MAX(id) 금지](feedback_vip_event_ordering_not_max_id.md) — kstadium-referral-backend 의 VIP 현황 SQL 은 `(effective_at, block_number, log_index, id) DESC` 정렬 필수. MAX(id) 만 쓰면 manual/auto 행 순서 뒤집힘
