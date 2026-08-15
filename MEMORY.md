@@ -12,7 +12,8 @@
 | **계획 문서대로 항목 착수** (= 내가 쓴 스펙 실행) | docs_as_guide_code_as_truth, no_guess_in_docs |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
 | **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
-| **발견·이상 보고** (= 조사 결과 사용자에게 알림) | no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic |
+| **발견·이상 보고** (= 조사 결과 사용자에게 알림) | no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
+| **리워드/보너스/지급 구조 설계·구현·검증** (회사 지출 발생 로직) | reward_abuse_scenario_check, answer_the_loss_not_the_accounting, preserve_decision_literal |
 | **"없다/불가능" 답변** (기능·방법 부재 단정) | verify_ecosystem_before_saying_impossible, no_single_source_generalization |
 | **손해/낭비/실패 원인 질문 응답** (= "왜 이만큼 들었/느렸/깨졌냐") | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
@@ -62,3 +63,4 @@
 - [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
 - [날짜 리터럴 직접 타이핑 금지 + 빈 결과는 입력 echo 먼저](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도/월은 시스템 날짜에서 파생 (학습 분포 탓 2025 미끄러짐 반복). "성공+빈 결과"면 외부 원인 가설 전에 내가 보낸 파라미터 echo 검증 (2026-08-07 NCP 202507 오타 → 오진 사건)
 - [에이전트 fan-out 은 토큰 3구간 + 작업 체인 누적 판정](feedback_confirm_before_large_agent_fanout.md) — 판정은 개수 아닌 **예상 토큰 3구간 (≤20만 자유 / ≤60만 한줄고지 / >60만 컨펌)** + **판정 단위 = 배치 1개가 아니라 작업 체인 누적** (워크플로 끝날 때마다 실측 totalTokens 합산해 재판정). 무거운 에이전트 ≈4.5~5만/개, **검증류는 ~9만/개** (휴리스틱 2배). 1:1 검증은 상한 안에서만, 무상한 fan-out 구조 금지, 필요성 선판단(한 컨텍스트면 main loop). 사고 2건: 2026-06-12 (52ag=234만 크래시) + **2026-07-02 (≤10개짜리 워크플로 3연속 = 누적 127.5만 = 개수 룰 전부 통과하고도 세션 한도 소진 — 배치 단위 판정이 구멍)**. "재현됨≠올바름", "정상이라 괜찮다" 금지 — 사전 고지+누적 상한으로 능동 방어
+- [리워드 구조는 어뷰즈 시나리오 필수 검증](feedback_reward_abuse_scenario_check.md) — 회사 지급 구조 설계·수정 시 총 지급 상한 계산 + 무KYC 다계정 시나리오 + 트리거 주체-비용 정렬 검산. fan-out 지급(1행위→N수혜)은 경보. (2026-08-15 강화 보너스 상위결제 트리거 = 무한 리워드 에러 사건)
