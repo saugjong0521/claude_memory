@@ -21,7 +21,7 @@
 | **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
 | **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
 | **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
-| **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes |
+| **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes, new_entity_crud_completeness |
 | **Git commit (코드/docs)** | commit_message_format, commit_no_claude_coauthor |
 | **Git push** | git_push_confirm, commit_message_format |
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
@@ -64,3 +64,4 @@
 - [날짜 리터럴 직접 타이핑 금지 + 빈 결과는 입력 echo 먼저](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도/월은 시스템 날짜에서 파생 (학습 분포 탓 2025 미끄러짐 반복). "성공+빈 결과"면 외부 원인 가설 전에 내가 보낸 파라미터 echo 검증 (2026-08-07 NCP 202507 오타 → 오진 사건)
 - [에이전트 fan-out 은 토큰 3구간 + 작업 체인 누적 판정](feedback_confirm_before_large_agent_fanout.md) — 판정은 개수 아닌 **예상 토큰 3구간 (≤20만 자유 / ≤60만 한줄고지 / >60만 컨펌)** + **판정 단위 = 배치 1개가 아니라 작업 체인 누적** (워크플로 끝날 때마다 실측 totalTokens 합산해 재판정). 무거운 에이전트 ≈4.5~5만/개, **검증류는 ~9만/개** (휴리스틱 2배). 1:1 검증은 상한 안에서만, 무상한 fan-out 구조 금지, 필요성 선판단(한 컨텍스트면 main loop). 사고 2건: 2026-06-12 (52ag=234만 크래시) + **2026-07-02 (≤10개짜리 워크플로 3연속 = 누적 127.5만 = 개수 룰 전부 통과하고도 세션 한도 소진 — 배치 단위 판정이 구멍)**. "재현됨≠올바름", "정상이라 괜찮다" 금지 — 사전 고지+누적 상한으로 능동 방어
 - [리워드 구조는 어뷰즈 시나리오 필수 검증](feedback_reward_abuse_scenario_check.md) — 회사 지급 구조 설계·수정 시 총 지급 상한 계산 + 무KYC 다계정 시나리오 + 트리거 주체-비용 정렬 검산. fan-out 지급(1행위→N수혜)은 경보. (2026-08-15 강화 보너스 상위결제 트리거 = 무한 리워드 에러 사건)
+- [새 엔티티는 CRUD 수명주기 완결로 설계](feedback_new_entity_crud_completeness.md) — 스펙 문장 최소 구현 금지: 생성 경로 전수 grep + 운영 CRUD 매트릭스 (누가/어느 화면) + 미구현 셀 명시 보고 + 관리 기능은 기존 운영 화면 통합 검토 (2026-08-15 레퍼럴 코드 수정 기능·manual 계정 발급 누락 사건)
