@@ -4,7 +4,7 @@
 
 | Process | Read 필요 파일 |
 |---------|----------------|
-| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting |
+| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting, check_design_history_before_changes |
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization, no_handtyped_dates_echo_inputs_on_empty |
 | **날짜/연도 들어가는 쿼리·스크립트 작성** | no_handtyped_dates_echo_inputs_on_empty |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references, verify_edit_applied_before_reporting |
@@ -41,6 +41,7 @@
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 (§5/§6/§10/§11 + §13~§15 deep-dive 매트릭스) cross-section sync 갱신 (drift 방지)
 - [Sync memory to git (manual)](feedback_auto_sync_memory.md) — 메모리 변경은 Claude 가 diff 기반 메시지 제안+컨펌+직접 commit+push. Stop hook 사용 X (컨펌 룰과 충돌)
 - [메모리 구조 + git sync 셋업 (리눅스/Mac/Windows)](reference_memory_git_setup.md) — 장기/중기/단기 3계층 구조 + 장기 메모리를 `~/.claude/claude_memory/` + `~/.claude/CLAUDE.md`(@import) 로 셋업·sync. **3 OS 공통** (`~/.claude/` 동일, Git Bash 권장 / Windows 네이티브는 `%USERPROFILE%`). 옛 `projects/<id>/memory/` 방식 폐기 — 마이그레이션 시 중복 로드 주의. hook 사용 X
+- [기존 로직 변경 전 과거 결정 이력 탐독·충돌 고지](feedback_check_design_history_before_changes.md) — 이미 구현된 코드 변경 시 docstring·docs 의 사용자 결정 원문 먼저 읽고, 어긋나면 "기존엔 ~로 설계돼 있었다 — 바꾸는 건데 괜찮냐"로 구현 전 확인 (2026-08-16 이벤트 이력 사건)
 - [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식. commit message 는 예외 (짧은 형식 유지)
 - [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` **영어 문구** + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
 - [Git push 시 사용자 confirm 받기](feedback_git_push_confirm.md) — commit 까지는 자동 OK, push 전엔 반드시 컨펌. 자발적 push 금지 (= remote 영향 + revert 어려움)
