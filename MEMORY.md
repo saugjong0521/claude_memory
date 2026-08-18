@@ -5,7 +5,8 @@
 | Process | Read 필요 파일 |
 |---------|----------------|
 | **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting, check_design_history_before_changes |
-| **유저 플로우/기능 변경** (제출·가입 등 UX 경로 재구성) | sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
+| **유저 플로우/기능 변경** (제출·가입 등 UX 경로 재구성) | sync_test_tools_with_feature_changes, cross_repo_audit_before_changes, no_emoji_follow_copy_conventions |
+| **UI 라벨/문구 추가·수정** | no_emoji_follow_copy_conventions, check_docs_000_first |
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization, no_handtyped_dates_echo_inputs_on_empty |
 | **날짜/연도 들어가는 쿼리·스크립트 작성** | no_handtyped_dates_echo_inputs_on_empty |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references, verify_edit_applied_before_reporting |
@@ -68,3 +69,4 @@
 - [리워드 구조는 어뷰즈 시나리오 필수 검증](feedback_reward_abuse_scenario_check.md) — 회사 지급 구조 설계·수정 시 총 지급 상한 계산 + 무KYC 다계정 시나리오 + 트리거 주체-비용 정렬 검산. fan-out 지급(1행위→N수혜)은 경보. (2026-08-15 강화 보너스 상위결제 트리거 = 무한 리워드 에러 사건)
 - [새 엔티티는 CRUD 수명주기 완결로 설계](feedback_new_entity_crud_completeness.md) — 스펙 문장 최소 구현 금지: 생성 경로 전수 grep + 운영 CRUD 매트릭스 (누가/어느 화면) + 미구현 셀 명시 보고 + 관리 기능은 기존 운영 화면 통합 검토 (2026-08-15 레퍼럴 코드 수정 기능·manual 계정 발급 누락 사건)
 - [테스트 도구는 기능 변경과 함께 자동 갱신](feedback_sync_test_tools_with_feature_changes.md) — 기능/플로우 변경 시 연관 dev 테스트 도구 grep + 유저와 같은 진입점 타는지 확인을 완료 조건에 포함. 내부 함수 직행 우회 금지 (2026-08-15 오늘의 영수증 테스트 도구 단계 우회 사건)
+- [이모지 남발 금지, 문구는 형제 양식 따르기](feedback_no_emoji_follow_copy_conventions.md) — 제품 라벨/문구 추가 시 같은 자리 형제 항목들의 기존 양식(텍스트만) 먼저 확인·준수. 이모지·장식 임의 도입 금지, 신규 도입은 사용자 확인 (2026-08-18 stale 라벨 ⏰ 사건)
