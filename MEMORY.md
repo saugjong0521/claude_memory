@@ -4,7 +4,7 @@
 
 | Process | Read 필요 파일 |
 |---------|----------------|
-| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting, check_design_history_before_changes |
+| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | **plan_stage_no_implementation (착수 신호 확인 게이트)**, check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally, verify_edit_applied_before_reporting, check_design_history_before_changes |
 | **유저 플로우/기능 변경** (제출·가입 등 UX 경로 재구성) | sync_test_tools_with_feature_changes, cross_repo_audit_before_changes, no_emoji_follow_copy_conventions |
 | **UI 라벨/문구 추가·수정** | no_emoji_follow_copy_conventions, check_docs_000_first |
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization, no_handtyped_dates_echo_inputs_on_empty |
@@ -13,7 +13,7 @@
 | **대량 기계적 변경** (= 코드 블록 일괄 삭제 / 정규식 치환 / 파일 분할) | verify_edit_applied_before_reporting, no_single_source_generalization |
 | **계획 문서대로 항목 착수** (= 내가 쓴 스펙 실행) | docs_as_guide_code_as_truth, no_guess_in_docs |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
-| **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
+| **사용자 응답 (질문/응답 형식)** | answer_existence_questions_literally, read_user_words_literally, **answer_all_items_in_message**, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
 | **발견·이상 보고** (= 조사 결과 사용자에게 알림) | no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
 | **리워드/보너스/지급 구조 설계·구현·검증** (회사 지출 발생 로직) | reward_abuse_scenario_check, answer_the_loss_not_the_accounting, preserve_decision_literal |
 | **"없다/불가능" 답변** (기능·방법 부재 단정) | verify_ecosystem_before_saying_impossible, no_single_source_generalization |
@@ -21,6 +21,7 @@
 | **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
 | **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal |
 | **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
+| **플랜(설계) 단계 진행** (= plan doc 정리·결정 수집·검토 질의응답 중) | plan_stage_no_implementation, phase_progression_collaborative, preserve_decision_literal |
 | **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
 | **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
 | **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes, new_entity_crud_completeness |
@@ -38,6 +39,8 @@
 - [No Claude co-author in commits](feedback_commit_no_claude_coauthor.md) — omit `Co-Authored-By: Claude` trailer from all git commit messages
 - [Answer existence questions literally](feedback_answer_existence_questions_literally.md) — "있어?" 류에는 Yes/No 만 먼저, 구현은 명시적 지시 이후
 - [Read user words literally](feedback_read_user_words_literally.md) — "지금/현재/fresh/최신" 같은 시점·범위 키워드를 IDE 정황·기존 파일로 치환 금지 + "필요하면 별도로 말씀" 류 책임 회피 단서 금지
+- [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 결정 컨펌("ㄱㄱ")은 plan doc 반영까지만, 구현 착수는 사용자의 명시 신호 후에만. 단계 전환은 사용자만 선언 (2026-08-19 recruit 플랜 중 코드 편집 사고)
+- [다항목 질문은 전수 응답](feedback_answer_all_items_in_message.md) — 질문 N개면 답 N개, 사용자 라벨 그대로 1:1 매핑. 조용한 누락·내 번호 재라벨링 금지 (2026-08-19 "번호 줘" 2건 중 1건 누락 사고)
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 다단계 phase 에서 사용자가 각 phase 마다 데이터·결정 입력, 자동 진행 금지
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 코드 작업 시작 전 프로젝트 `docs/000.*` (3자리 prefix) 확인 후 진행 (UI 라벨 의역 등 가드 정책 1차 참조)
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 (§5/§6/§10/§11 + §13~§15 deep-dive 매트릭스) cross-section sync 갱신 (drift 방지)
