@@ -1,6 +1,6 @@
 ## 프로세스별 참조 가이드
 
-작업 시작 시점에 해당 process 의 feedback 파일을 read 후 진행. 한 룰이 여러 process 에 속할 수 있음.
+**작업지시 단위로 분류·read** — 세션 시작 1회가 아니라 지시를 받을 때마다: ① 그 지시의 성격을 표에서 분류 ② 해당 행의 feedback 파일 read ③ 맞는 행이 없으면 그 사실을 인지하고 가장 가까운 룰 적용 + 행 신설 제안. (2026-08-21 recruit prd 오안내의 근본 원인 = 이 분류·read 생략 + "배포/승격" 행 부재.) 한 룰이 여러 process 에 속할 수 있음.
 
 | Process | Read 필요 파일 |
 |---------|----------------|
@@ -32,6 +32,7 @@
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
 | **RDBMS sync 코드 작성** (UPSERT / INSERT) | rdbms_upsert_autoinc |
 | **실행 중 서비스 운영** (재시작/중지/리로드/배포·프로세스 상태 확인) | verify_runtime_supervisor_before_restart, docs_as_guide_code_as_truth |
+| **배포/승격** (dev→prd 반영, 배포 절차 안내, "배포 가능/구성됨" 전제의 답변) | no_single_source_generalization (**파일≠인프라 — DNS·secrets·실행이력 3종 probe**), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_push_confirm |
 | **멀티에이전트 워크플로 실행** (= Workflow / 대량 Agent fan-out) | confirm_before_large_agent_fanout |
 | **메모리 변경 commit** | auto_sync_memory, commit_message_format, commit_no_claude_coauthor |
 | **새 PC memory 셋업** | reference_memory_git_setup, auto_sync_memory |
@@ -69,7 +70,7 @@
 - [손해 질문엔 계측 아닌 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "왜 낭비/손해/실패했냐"엔 "숫자는 맞으니 정상"으로 시스템 변호 금지. 그 결과가 정당했는지를 먼저. "재현됨≠올바름". (2026-06-12 토큰폭주 조사서 내가 범한 오판)
 - [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. **수동 프로세스 재기동 시 cmdline 만 복제 금지 — env 격리 (unset 등) 포함한 repo 기동 스크립트로** (2026-07-23 KSTA_RPC_URL mainnet 오염 재발). **sudo 필요한 재기동은 kill-PID 우회 금지 — 배포까지만 하고 명령 제시 후 사용자 핸드오프** (2026-08-05). docs_as_guide_code_as_truth 의 런타임 확장
 - ["없다/불가능" 단정 전 생태계 최신 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치된 버전의 한계 ≠ 세상에 없음. "~방법 없니?" 질문엔 공식 docs·후속 라이브러리 웹검색 먼저 (2026-07-22 metamask connect-evm 놓친 사건)
-- [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
+- [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임, 파일≠인프라](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. **워크플로 파일 존재 ≠ 인프라 존재** — DNS·secrets·실행이력 3종 probe (2026-08-21 recruit prd 오안내). 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
 - [날짜 리터럴 직접 타이핑 금지 + 빈 결과는 입력 echo 먼저](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도/월은 시스템 날짜에서 파생 (학습 분포 탓 2025 미끄러짐 반복). "성공+빈 결과"면 외부 원인 가설 전에 내가 보낸 파라미터 echo 검증 (2026-08-07 NCP 202507 오타 → 오진 사건)
 - [에이전트 fan-out 은 토큰 3구간 + 작업 체인 누적 판정](feedback_confirm_before_large_agent_fanout.md) — 판정은 개수 아닌 **예상 토큰 3구간 (≤20만 자유 / ≤60만 한줄고지 / >60만 컨펌)** + **판정 단위 = 배치 1개가 아니라 작업 체인 누적** (워크플로 끝날 때마다 실측 totalTokens 합산해 재판정). 무거운 에이전트 ≈4.5~5만/개, **검증류는 ~9만/개** (휴리스틱 2배). 1:1 검증은 상한 안에서만, 무상한 fan-out 구조 금지, 필요성 선판단(한 컨텍스트면 main loop). 사고 2건: 2026-06-12 (52ag=234만 크래시) + **2026-07-02 (≤10개짜리 워크플로 3연속 = 누적 127.5만 = 개수 룰 전부 통과하고도 세션 한도 소진 — 배치 단위 판정이 구멍)**. "재현됨≠올바름", "정상이라 괜찮다" 금지 — 사전 고지+누적 상한으로 능동 방어
 - [리워드 구조는 어뷰즈 시나리오 필수 검증](feedback_reward_abuse_scenario_check.md) — 회사 지급 구조 설계·수정 시 총 지급 상한 계산 + 무KYC 다계정 시나리오 + 트리거 주체-비용 정렬 검산. fan-out 지급(1행위→N수혜)은 경보. (2026-08-15 강화 보너스 상위결제 트리거 = 무한 리워드 에러 사건)

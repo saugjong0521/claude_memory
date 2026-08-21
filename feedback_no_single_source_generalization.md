@@ -16,6 +16,8 @@ originSessionId: a774f72c-6235-43be-9fc7-4a54722432e2
    - entity 파일 + migration + module `forFeature` + **`app.module.ts` forRoot `entities` 배열** + (필요 시) `data-source.ts`.
    - `data-source.ts` 에 없다고 "auto-load" 로 단정 X — 런타임은 `forRootAsync` 의 명시 entities(autoLoad 없음)를 쓰고, `data-source.ts` 는 migration CLI 용이라 불완전할 수 있음.
 
+3-b. **워크플로/스크립트 파일 존재 ≠ 배포 인프라 존재** — `deploy-prd.yml` 이 repo 에 있다는 관찰만으로 "prd 배포 가능 / 도메인 구성됨" 단정 금지. 배포 대상은 3종 probe: ① 도메인 DNS (`curl -sI` / `host`) ② repo secrets (`gh secret list` — PRD_ 접두 존재?) ③ 그 워크플로의 실행 이력 (`gh run list` — 성공한 적 있나?). (2026-08-21 recruit prd 오안내 — 파일만 보고 "이미 구성돼 있다" 단언, 실제 NXDOMAIN + PRD 시크릿 전무 + 유일한 실행 failure. curl 3초면 잡혔음)
+
 3. **build 통과 ≠ 런타임 정상** — DI/ORM 메타데이터·등록·wiring 누락은 컴파일러가 못 잡고 **첫 호출에 lazy 하게** 터진다. 검증은:
    - **엔드포인트를 실제로 한 번 태운다**(앱 구동 + 그 경로 호출).
    - 못 태우면(로컬 DB/런타임 없음) **wiring 파일을 동작하는 형제와 대조**(app.module entities/providers/imports 등).
