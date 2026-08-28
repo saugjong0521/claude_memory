@@ -38,7 +38,7 @@
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
 - [사용자 결정은 원문 quote 로 보존](feedback_preserve_decision_literal.md) — plan doc § 안에 자연어 원문
-- [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패
+- [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
 - [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
 - [코드·런타임으로 검증](feedback_verify_against_code_and_runtime.md) — docs·주석·내 계획서·한 파일은 지도일 뿐. 표는 행마다 grep, 형제와 cross-check, build≠런타임, 워크플로 파일≠인프라(DNS·secrets·실행이력 probe)
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 작업 전 프로젝트 `docs/000.*` 확인
