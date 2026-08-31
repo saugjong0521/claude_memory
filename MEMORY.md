@@ -45,7 +45,7 @@
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 영향 섹션 cross-section sync
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — §1 역할→§2 한눈에→§3 흐름→§4 시나리오→인덱스→Gotchas. 변경이력은 commit 시점에 1행
 - [기존 로직 변경 전 결정 이력 탐독·충돌 고지](feedback_check_design_history_before_changes.md) — 어긋나면 "기존엔 ~로 설계 — 바꾸는 건데 괜찮냐" 먼저
-- [편집 적용 확인 후 보고 + 대량 삭제는 파서로](feedback_verify_edit_applied_before_reporting.md) — 재조회로 확인, `assert` 앵커, 린터·빌드·런타임 3중
+- [편집 적용 확인 후 보고 + 대량 삭제는 파서로](feedback_verify_edit_applied_before_reporting.md) — 재조회로 확인, `assert` 앵커, 린터·빌드·런타임 3중, **cherry-pick 체인은 커밋별 종료코드 + push 전 커밋 수 assert** (2026-08-31)
 - [Explain code references](feedback_explain_code_references.md) — 식별자 언급 시 "X (= Y 하는 것)"
 - [발견·설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — 의미 + 시나리오/숫자 + 유저·사측 영향
 - [손해 질문엔 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "숫자는 맞으니 정상" 금지, 재현됨≠올바름

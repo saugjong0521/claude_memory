@@ -24,3 +24,12 @@ metadata:
 5. **린터 결과를 신호로 대접** — `no-undef`/`no-unused-vars` 는 잔소리가 아니라 이 클래스의 유일한 자동 그물이다. 게이트가 일부 경로만 검사한다면(예: `eslint src`) 그 밖은 사람이 봐야 한다는 뜻.
 
 관련: [[no_guess_in_docs]] (= docs **내용**을 grep 근거로 채움 — 본 룰은 **적용 여부** 확인), [[no_single_source_generalization]] (= build/typecheck 통과 ≠ 런타임 정상), [[docs_as_guide_code_as_truth]].
+
+## cherry-pick / 배치 git 체인은 커밋마다 종료코드 검사 (2026-08-31 추가)
+
+**Why:** kstadium-shop 손님앱 prod 반영에서 `git cherry-pick -x A B C 2>&1 | grep …` 로 묶어 돌리다 B 가 **modify/delete 충돌**(main 에 의도적으로 없는 파일을 dev 커밋이 수정)로 멈췄는데, 파이프 뒤 `grep` 이 종료코드를 삼켜 스크립트가 계속 진행 → 빌드는 충돌 작업트리로 통과, push 는 A 만 반영. 라이브 번들 grep(모달 상한 0)으로 뒤늦게 발견해 재적용.
+
+**How to apply:**
+- cherry-pick 은 커밋 하나씩 `|| { echo CONFLICT; exit 1; }` — 파이프로 출력 필터링하지 말고 `set -o pipefail` 또는 결과를 변수로 받아 검사.
+- push 직전 `git log --oneline <base>..HEAD` 로 **적용된 커밋 수 == 의도한 수** 를 assert.
+- prod 제외 파일(카드 등록 등)을 건드리는 dev 커밋은 충돌이 정상 — `git rm <file>` + `cherry-pick --continue` 로 삭제 유지가 해소법. 라이브 번들 문자열 grep 은 마지막 안전망으로 계속 유지.
