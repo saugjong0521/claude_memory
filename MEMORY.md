@@ -58,7 +58,7 @@
 - [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프
 - ["없다/불가능" 단정 전 생태계 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치 버전 한계 ≠ 세상에 없음
 - [날짜 리터럴 금지 + 빈 결과는 입력 echo](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도는 시스템 날짜에서, "성공+빈 결과" 면 파라미터 먼저
-- [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개
+- [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개, **감사류 14~21만/개** (2026-08-31 실측)
 - [분류 SQL 은 모든 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md)
 - [RDBMS UPSERT AUTO_INCREMENT 주의](feedback_rdbms_upsert_autoinc.md)
 - [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 여기는 Claude 의 일반 process/선호만
