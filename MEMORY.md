@@ -26,7 +26,7 @@
 | **Git checkout / switch / reset --hard** | git_branch_switch_destroys_orphan_tracked_files |
 | **RDBMS sync 코드 (UPSERT)** | rdbms_upsert_autoinc |
 | **실행 중 서비스 운영** (재시작·배포·프로세스 확인) | verify_runtime_supervisor_before_restart, verify_against_code_and_runtime |
-| **배포/승격** (dev→prd, "배포 가능" 전제 답변) | verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions |
+| **배포/승격** (dev→prd, "배포 가능" 전제 답변) | verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions, **adversarial_verify_before_prod** (보안 패치·"적대적으로 확인") |
 | **멀티에이전트 워크플로 / 대량 Agent fan-out** | confirm_before_large_agent_fanout |
 | **새 PC memory 셋업** | reference_memory_git_setup, git_conventions |
 
@@ -58,6 +58,7 @@
 - [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프
 - ["없다/불가능" 단정 전 생태계 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치 버전 한계 ≠ 세상에 없음
 - [날짜 리터럴 금지 + 빈 결과는 입력 echo](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도는 시스템 날짜에서, "성공+빈 결과" 면 파라미터 먼저
+- [prod 전 적대적 검증 = 자체 공격 재현 + 독립 에이전트 1개](feedback_adversarial_verify_before_prod.md) — 자체 점검은 내 전제를 못 의심한다 (2026-09-01: 에이전트 15만 토큰, 실효 4건 중 1건이 내 수정의 전제 오류)
 - [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개, **감사류 14~21만/개** (2026-08-31 실측)
 - [분류 SQL 은 모든 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md)
 - [RDBMS UPSERT AUTO_INCREMENT 주의](feedback_rdbms_upsert_autoinc.md)
