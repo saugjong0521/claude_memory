@@ -26,7 +26,7 @@
 | **Git checkout / switch / reset --hard** | git_branch_switch_destroys_orphan_tracked_files |
 | **RDBMS sync 코드 (UPSERT)** | rdbms_upsert_autoinc |
 | **실행 중 서비스 운영** (재시작·배포·프로세스 확인) | verify_runtime_supervisor_before_restart, verify_against_code_and_runtime |
-| **배포/승격** (dev→prd, "배포 가능" 전제 답변) | verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions, **adversarial_verify_before_prod** (보안 패치·"적대적으로 확인") |
+| **배포/승격** (dev→prd, "배포 가능" 전제 답변) | **prod_deploy_needs_explicit_instruction** (prod 는 명시 지시만), verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions, **adversarial_verify_before_prod** (보안 패치·"적대적으로 확인") |
 | **멀티에이전트 워크플로 / 대량 Agent fan-out** | confirm_before_large_agent_fanout |
 | **새 PC memory 셋업** | reference_memory_git_setup, git_conventions |
 
@@ -53,6 +53,7 @@
 - [새 엔티티는 CRUD 수명주기 완결](feedback_new_entity_crud_completeness.md) — 생성 경로 전수 grep, 운영 CRUD 매트릭스, 미구현 명시, 기존 운영 화면 통합 검토
 - [테스트 도구는 기능 변경과 함께 갱신](feedback_sync_test_tools_with_feature_changes.md) — 유저와 같은 진입점, 내부 함수 직행 금지
 - [FE/BE cross-check 매트릭스](feedback_cross_repo_audit_before_changes.md) — endpoint 매트릭스·PATH 사용·helper 커버리지·직접 호출 4차원
+- [prod 반영은 명시 지시만](feedback_prod_deploy_needs_explicit_instruction.md) — "ㄱㄱ/계속" 은 dev 범위. plan 의 prd 단계도 별도 착수 신호 (2026-09-03 미승인 배포 revert)
 - [Git 컨벤션](feedback_git_conventions.md) — `(yyyymmdd) 동사_내용` 영어, co-author 금지, commit 메시지·push 컨펌 (같은 흐름의 후속은 고지만), 메모리 repo 동일
 - [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — 전환 전 `.env*` 백업
 - [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프
