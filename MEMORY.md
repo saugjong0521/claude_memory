@@ -6,7 +6,7 @@
 |---------|----------------|
 | **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
-| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, check_docs_000_first |
+| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), check_docs_000_first |
 | **유저 플로우/기능 변경** | ui_design_principles, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
 | **설정값 추가** (env / config) | config_not_env_for_addresses |
 | **코드 검증 / 테스트 / "구현됐나" 확인** | verify_against_code_and_runtime, no_handtyped_dates_echo_inputs_on_empty |
@@ -39,6 +39,7 @@
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
 - [사용자 결정은 원문 quote 로 보존](feedback_preserve_decision_literal.md) — plan doc § 안에 자연어 원문
 - [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
+- [웹앱(휴대폰+웹) 화면 규격](feedback_webapp_responsive_layout.md) — 유동형 + 기준 360 + 최소 344(아래는 가로 스크롤) + md 768, 글자 최소 13px, 한글 keep-all, 검수 344/360/390/820 스크린샷
 - [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
 - [코드·런타임으로 검증](feedback_verify_against_code_and_runtime.md) — docs·주석·내 계획서·한 파일은 지도일 뿐. 표는 행마다 grep, 형제와 cross-check, build≠런타임, 워크플로 파일≠인프라(DNS·secrets·실행이력 probe)
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 작업 전 프로젝트 `docs/000.*` 확인
