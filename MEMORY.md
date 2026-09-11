@@ -57,7 +57,7 @@
 - [prod 반영은 명시 지시만](feedback_prod_deploy_needs_explicit_instruction.md) — "ㄱㄱ/계속" 은 dev 범위. plan 의 prd 단계도 별도 착수 신호 (2026-09-03 미승인 배포 revert)
 - [Git 컨벤션](feedback_git_conventions.md) — `(yyyymmdd) 동사_내용` 영어, co-author 금지, commit 메시지·push 컨펌 (같은 흐름의 후속은 고지만), 메모리 repo 동일
 - [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — 전환 전 `.env*` 백업
-- [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프
+- [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프, **unit 이름은 폴더명에서 유추 말고 조회해서 복사** (boomerang prd = `kstadium-shop-prd-backend`)
 - ["없다/불가능" 단정 전 생태계 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치 버전 한계 ≠ 세상에 없음
 - [날짜 리터럴 금지 + 빈 결과는 입력 echo](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도는 시스템 날짜에서, "성공+빈 결과" 면 파라미터 먼저
 - [prod 전 적대적 검증 = 자체 공격 재현 + 독립 에이전트 1개](feedback_adversarial_verify_before_prod.md) — 자체 점검은 내 전제를 못 의심한다 (2026-09-01: 에이전트 15만 토큰, 실효 4건 중 1건이 내 수정의 전제 오류)

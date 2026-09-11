@@ -32,3 +32,8 @@ originSessionId: 552687bc-ce8e-4bce-96e7-4e732ad1fbd9
 
 7. **수동(비-supervisor) 프로세스를 재기동할 때는 명령뿐 아니라 env 까지 복제**: cmdline 만 복제해 다시 띄우면 원 기동 절차의 **환경 정리 (unset/export) 가 누락**될 수 있다. `/proc/PID/environ` 이 안 읽히면 repo 의 기동/배포 스크립트 (`scripts/deploy_*.sh` 등) 에 env 격리 절차가 내장돼 있는지 확인하고 **그 스크립트로 재기동**하는 게 기본값.
    - **Why (2026-07-23 사고)**: kstadium-shop dev 서버를 수동 `nohup uvicorn` 으로 3회 재시작 — 정식 절차 `scripts/deploy_dev.sh` 의 `unset KSTA_RPC_URL` (= `~/.bashrc` 전역 mainnet export 가 `.env.dev` 를 덮는 것 차단) 을 우회 → 잔액 조회가 mainnet 으로 가서 "집금지갑 0 KSTA" 오판, 사용자가 지급 실패로 발견. **07-22 에 이미 문서화된 사고의 재발** — docs/000 §7 을 읽지 않고 재기동한 것이 원인. rule 1 (docs 는 supervisor 가 아니다) 과 모순 아님: supervisor 식별은 라이브가 진실이되, **기동 "절차" (env 정리 포함) 는 repo 스크립트가 담고 있을 수 있다** — 둘 다 확인.
+
+8. **재기동 명령을 사용자에게 건널 때 unit 이름은 추측하지 말고 그 자리에서 조회한다** (2026-09-11 사용자 "prod->prd 로 메모리룰 박아줘"):
+   `grep -l "<WorkingDirectory 경로>" /etc/systemd/system/*.service` 또는 `systemctl list-units --all | grep -i <프로젝트>` 로 **실제 unit 이름을 읽어서** 명령에 넣는다.
+   - **Why**: boomerang 프로젝트는 2026-09-09 폴더를 `boomerang-dev/` · `boomerang-prod/` 로 바꿨지만 systemd unit 은 옛 이름 `kstadium-shop-backend`(dev) · **`kstadium-shop-prd-backend`**(prd) 그대로다. 폴더명에서 유추해 `boomerang-prod-backend` 로 안내 → `Unit not found`. 폴더·repo·도메인 이름과 unit 이름은 **서로 독립**이고, 한 번 정착한 unit 이름은 폴더가 바뀌어도 안 바뀐다.
+   - 환경 약어도 프로젝트마다 다르다 (이 프로젝트: 폴더 `prod`, unit·alembic·스크립트 `prd`). 명령에 쓸 이름은 항상 조회 결과를 그대로 복사한다.
