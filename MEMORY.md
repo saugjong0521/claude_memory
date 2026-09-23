@@ -4,7 +4,7 @@
 
 | Process | Read 필요 파일 |
 |---------|----------------|
-| **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references |
+| **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean** |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
 | **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), check_docs_000_first |
 | **유저 플로우/기능 변경** | ui_design_principles, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
@@ -27,11 +27,12 @@
 | **RDBMS sync 코드 (UPSERT)** | rdbms_upsert_autoinc |
 | **실행 중 서비스 운영** (재시작·배포·프로세스 확인) | verify_runtime_supervisor_before_restart, verify_against_code_and_runtime, bounded_polling_loops |
 | **배포/승격** (dev→prd, "배포 가능" 전제 답변) | **prod_deploy_needs_explicit_instruction**, app_version_bump_includes_apk (prod 는 명시 지시만), verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions, **adversarial_verify_before_prod** (보안 패치·"적대적으로 확인") |
-| **멀티에이전트 워크플로 / 대량 Agent fan-out** | confirm_before_large_agent_fanout |
+| **멀티에이전트 워크플로 / 대량 Agent fan-out** | confirm_before_large_agent_fanout, **all_user_facing_output_in_korean** (프롬프트에 "보고서는 한국어로") |
 | **새 PC memory 셋업** | reference_memory_git_setup, git_conventions |
 
 ## 전체 인덱스
 
+- [사용자에게 보이는 출력은 전부 한국어](feedback_all_user_facing_output_in_korean.md) — 서브에이전트·워크플로 보고서도 포함, 프롬프트에 "보고서는 한국어로" 명시
 - [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만
 - [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
