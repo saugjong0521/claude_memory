@@ -33,7 +33,7 @@
 ## 전체 인덱스
 
 - [사용자에게 보이는 출력은 전부 한국어](feedback_all_user_facing_output_in_korean.md) — 서브에이전트·워크플로 보고서도 포함, 프롬프트에 "보고서는 한국어로" 명시
-- [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만
+- [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만, "X 설명하고 진행" 은 설명→답변→정리→진행
 - [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
@@ -45,7 +45,7 @@
 - [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
 - [웹앱(휴대폰+웹) 화면 규격](feedback_webapp_responsive_layout.md) — 유동형 + 기준 360 + 최소 344(아래는 가로 스크롤) + md 768, 글자 5단계(캡션 12·본문 14·제목 16), extrabold 금지, 카드 패딩 16, 한글 keep-all, 검수 344/360/390/820 스크린샷
 - [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
-- [코드·런타임으로 검증](feedback_verify_against_code_and_runtime.md) — docs·주석·내 계획서·한 파일은 지도일 뿐. 표는 행마다 grep, 형제와 cross-check, build≠런타임, 워크플로 파일≠인프라(DNS·secrets·실행이력 probe)
+- [코드·런타임으로 검증](feedback_verify_against_code_and_runtime.md) — docs·주석·내 계획서·한 파일은 지도일 뿐. 표는 행마다 grep, 형제와 cross-check, build≠런타임, 워크플로 파일≠인프라(DNS·secrets·실행이력 probe), 검증 도구 결과도 샘플 원문 대조로 도구 버그부터 배제
 - [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 작업 전 프로젝트 `docs/000.*` 확인
 - [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 영향 섹션 cross-section sync
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — §1 역할→§2 한눈에→§3 흐름→§4 시나리오→인덱스→Gotchas. 변경이력은 commit 시점에 1행

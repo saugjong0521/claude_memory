@@ -1,6 +1,6 @@
 ---
 name: verify_against_code_and_runtime
-description: docs·주석·내 계획서·한 파일의 관찰은 지도일 뿐 — 단정·구현·보고 전에 코드 grep/본문 read, 동작하는 형제와 대조, 런타임 호출로 확인. 표 작성도 행마다 grep. build 통과≠런타임, 워크플로 파일≠인프라
+description: docs·주석·내 계획서·한 파일의 관찰은 지도일 뿐 — 단정·구현·보고 전에 코드 grep/본문 read, 동작하는 형제와 대조, 런타임 호출로 확인. 표 작성도 행마다 grep. build 통과≠런타임, 워크플로 파일≠인프라, 검증 도구의 불일치·전부 통과도 샘플 원문 대조로 도구 버그부터 배제
 metadata:
   type: feedback
 ---
@@ -22,5 +22,8 @@ metadata:
 - **build/typecheck 통과 ≠ 런타임 정상** — DI/ORM 메타데이터는 첫 호출에 lazy 로 터진다. 엔드포인트를 실제로 한 번 태우거나 wiring 을 형제와 대조.
 - **워크플로 파일 존재 ≠ 인프라 존재** — 배포 대상은 DNS(`curl -sI`/`host`) + repo secrets(`gh secret list`) + 실행 이력(`gh run list`) 3종 probe 뒤에 "구성돼 있다" 고 말한다. (2026-08-21 recruit prd 오안내 — NXDOMAIN + 시크릿 전무)
 - 검증 안 된 메커니즘을 사용자에게 자신 있게 단언하지 않는다.
+
+**4. 검증 도구의 결과도 도구부터 의심한다.** 내가 만든(또는 기존) 판정 규칙·대조 스크립트가 낸 "불일치/오류" 는 보고 전에 **샘플 1건을 원문 값으로 직접 대조**해 도구 쪽 가정(필드 형태·인코딩·마크업)을 먼저 배제한다. 반대로 "전부 통과" 도 규칙이 실데이터 형태를 실제로 잡는지 양성 샘플로 확인한다 — 한 번도 걸린 적 없는 규칙은 미탐 의심.
+(2026-09-28 scope-validate: 새 단계 판정이 "답변 텍스트 원장≠코어" error 를 냈는데 원장 answer 가 문자열이 아니라 `{text, modelSlug, contentHash}` 객체였음 / 스탠스 "근거 없음" 4건 = 원문 `**` 강조 차이 / `citation-consistency` 정규식이 실제 마커 `citeturn…` 를 못 잡아 **항상 통과** — 셋 다 보고 전 원문 diff 로 발견)
 
 관련: [[verify_runtime_supervisor_before_restart]] (실행 중 서비스는 supervisor 가 진실), [[verify_edit_applied_before_reporting]] (편집 적용도 재조회), [[update_docs_000_after_changes]]
