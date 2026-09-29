@@ -6,8 +6,8 @@
 |---------|----------------|
 | **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean** |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
-| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), check_docs_000_first |
-| **유저 플로우/기능 변경** | ui_design_principles, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
+| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), check_docs_000_first |
+| **유저 플로우/기능 변경** | ui_design_principles, **condition_applies_to_every_surface**, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
 | **설정값 추가** (env / config) | config_not_env_for_addresses |
 | **코드 검증 / 테스트 / "구현됐나" 확인** | verify_against_code_and_runtime, no_handtyped_dates_echo_inputs_on_empty |
 | **날짜/연도 들어가는 쿼리·스크립트** | no_handtyped_dates_echo_inputs_on_empty |
@@ -15,12 +15,12 @@
 | **대량 기계적 변경** (일괄 삭제·정규식 치환) | verify_edit_applied_before_reporting, verify_against_code_and_runtime |
 | **계획 문서대로 항목 착수** | verify_against_code_and_runtime |
 | **새 docs/000.* 작성 · 매트릭스/분류 표** | harness_doc_structure, verify_against_code_and_runtime, full_columns_in_classification_sql |
-| **발견·이상 보고** | no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
+| **발견·이상 보고** | search_transcripts_before_denying_history (사용자 기억과 어긋날 때), no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
 | **리워드/지급 구조 설계·구현·검증** | reward_abuse_scenario_check, answer_the_loss_not_the_accounting, preserve_decision_literal |
-| **"없다/불가능" 답변** | verify_ecosystem_before_saying_impossible, verify_against_code_and_runtime |
+| **"없다/불가능" 답변** ("그런 기획·논의는 없었다" 포함) | **search_transcripts_before_denying_history**, verify_ecosystem_before_saying_impossible, verify_against_code_and_runtime |
 | **손해/낭비/실패 원인 질문** | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal |
-| **플랜(설계) 단계 · plan doc 작성** | plan_stage_no_implementation, plan_review_artifact_before_work, preserve_decision_literal, harness_doc_structure, phase_progression_collaborative |
+| **플랜(설계) 단계 · plan doc 작성** | **condition_applies_to_every_surface**(표면 표), plan_stage_no_implementation, plan_review_artifact_before_work, preserve_decision_literal, harness_doc_structure, phase_progression_collaborative |
 | **Frontend / Backend 양쪽 영향 변경 · 새 엔티티/모듈 등록** | cross_repo_audit_before_changes, new_entity_crud_completeness, verify_against_code_and_runtime |
 | **Git commit / push / 메모리 commit** | git_conventions |
 | **Git checkout / switch / reset --hard** | git_branch_switch_destroys_orphan_tracked_files |
@@ -39,6 +39,8 @@
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
 - [사용자 결정은 원문 quote 로 보존](feedback_preserve_decision_literal.md) — plan doc § 안에 자연어 원문
+- [조건은 모든 표면에 대해 확인](feedback_condition_applies_to_every_surface.md) — 노출·발생 조건을 받으면 진입 배너·선택 화면·본 화면·제출까지 표로 나열해 확인. 용어를 컴포넌트 하나에 혼자 대응 금지, 내가 정한 조건은 결정 항목으로, 진입점 ⊆ 완료 가능 (2026-09-29 현장 퀘스트 배너 3km↔10m)
+- ["없었다" 단정 전 대화 기록 원문 검색](feedback_search_transcripts_before_denying_history.md) — docs 는 내가 쓴 2차 사료. 사용자 기억을 가설로 두고 `~/.claude/projects/*.jsonl` 의 사용자 발화를 찾는다. "문서에 없다" ≠ "논의가 없었다" (2026-09-29)
 - [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
 - [웹앱(휴대폰+웹) 화면 규격](feedback_webapp_responsive_layout.md) — 유동형 + 기준 360 + 최소 344(아래는 가로 스크롤) + md 768, 글자 5단계(캡션 12·본문 14·제목 16), extrabold 금지, 카드 패딩 16, 한글 keep-all, 검수 344/360/390/820 스크린샷
 - [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
