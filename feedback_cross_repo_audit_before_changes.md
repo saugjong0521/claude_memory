@@ -81,4 +81,4 @@ grep -rn "referralApi\.\(get\|post\|put\|patch\|delete\)" src/components/admin/ 
 - schema (= request body / response shape) 변경 시
 - prod deploy 직전 마지막 sanity check
 
-관련: [[no_guess_in_docs]] (= docs 표 작성 시 grep 기반), [[docs_as_guide_code_as_truth]] (= 검증은 코드 직접 read), [[full_columns_in_classification_sql]] (= 분류 SQL 전체 컬럼 한 번에).
+관련: [[verify_against_code_and_runtime]] (= docs 표 작성 시 grep 기반, 검증은 코드 직접 read), [[full_columns_in_classification_sql]] (= 분류 SQL 전체 컬럼 한 번에).

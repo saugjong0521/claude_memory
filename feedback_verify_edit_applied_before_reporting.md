@@ -23,7 +23,7 @@ metadata:
 4. **삭제 전 백업 + 삭제 후 3중 확인** — 원본 사본 보관 → ① 린터(미사용/미정의) ② 빌드 ③ **런타임 대조**(제거 전/후 모듈을 각각 로드해 남겨야 할 경로가 동일 응답을 내는지). 정적 검사만으로 끝내지 않는다.
 5. **린터 결과를 신호로 대접** — `no-undef`/`no-unused-vars` 는 잔소리가 아니라 이 클래스의 유일한 자동 그물이다. 게이트가 일부 경로만 검사한다면(예: `eslint src`) 그 밖은 사람이 봐야 한다는 뜻.
 
-관련: [[no_guess_in_docs]] (= docs **내용**을 grep 근거로 채움 — 본 룰은 **적용 여부** 확인), [[no_single_source_generalization]] (= build/typecheck 통과 ≠ 런타임 정상), [[docs_as_guide_code_as_truth]].
+관련: [[verify_against_code_and_runtime]] (= docs **내용**을 grep 근거로 채움, build/typecheck 통과 ≠ 런타임 정상 — 본 룰은 **적용 여부** 확인).
 
 ## cherry-pick / 배치 git 체인은 커밋마다 종료코드 검사 (2026-08-31 추가)
 

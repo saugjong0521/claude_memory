@@ -4,7 +4,7 @@ description: 실행 중 서비스의 재시작/중지/리로드/기동 질문은
 type: feedback
 originSessionId: 552687bc-ce8e-4bce-96e7-4e732ad1fbd9
 ---
-실행 중인 서비스/프로세스를 재시작·중지·리로드·"어떻게 띄우나" 다룰 때, **진실의 출처는 repo 의 스크립트가 아니라 라이브 supervisor (systemd / docker / k8s / supervisord / 수동)** 다. repo 산출물 (script / Makefile / Dockerfile / README 실행법 / CI) 은 "의도" 를 기술할 뿐 실제 감독 방식이 아니다. [feedback_docs_as_guide_code_as_truth](feedback_docs_as_guide_code_as_truth.md) 의 런타임 확장.
+실행 중인 서비스/프로세스를 재시작·중지·리로드·"어떻게 띄우나" 다룰 때, **진실의 출처는 repo 의 스크립트가 아니라 라이브 supervisor (systemd / docker / k8s / supervisord / 수동)** 다. repo 산출물 (script / Makefile / Dockerfile / README 실행법 / CI) 은 "의도" 를 기술할 뿐 실제 감독 방식이 아니다. [feedback_verify_against_code_and_runtime](feedback_verify_against_code_and_runtime.md) 의 런타임 확장.
 
 **Why:** 2026-06-10 사고 — `kstadium-referral-backend` 텔레그램 토큰 교체 후 "재시작 코드" 요청. `scripts/restart_gunicorn.sh` 를 읽고 "이게 서비스 도는 방식" 으로 진실 승격. 라이브 master 가 `PPID=1` + `.server.pid` 없음 + argv 가 스크립트 (`--daemon --pid`) 와 불일치 = "스크립트가 안 띄웠다" 는 falsification 이었는데, 이를 "사람이 손으로 disown 한 데몬" 이라는 **미관측 행위자** 로 메워 프레임 유지. `PPID=1` (= 고아 데몬 OR PID-1 supervisor 둘 다 가능한 모호 신호) 을 systemd 가능성 버리고 (a) 에 끼워맞춤. 결과: (1) 올바른 `sudo systemctl restart` 를 놓침, (2) `kill -TERM` + `run_gunicorn.sh` 처방 → unit 의 `Restart=always` (RestartSec=3) 가 3초 내 자기 gunicorn 을 8000 에 재기동 → 이중 인스턴스 / 포트 충돌 / worker_leaders split-brain 가능한 **prod 사고 절차**. 사용자가 "systemd restart 하면 되지 않음?" 으로 교정. 결정적 tell = /proc/PID/**environ** (확증) 은 읽고 sibling /proc/PID/**cgroup** (반증) 은 안 읽은 비대칭 증거 수집.
 

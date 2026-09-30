@@ -34,5 +34,5 @@ metadata:
    같은 URL 유지).
 
 관련: [[plan_stage_no_implementation]] (확인 후에도 착수는 명시 신호), [[preserve_decision_literal]]
-(결정 원문은 plan doc 에), [[harness_doc_structure]] (plan doc 골격), [[answer_all_items_in_message]]
+(결정 원문은 plan doc 에), [[harness_doc_structure]] (plan doc 골격), [[read_user_words_literally]]
 (확인 라운드의 수정 항목 전수 반영)

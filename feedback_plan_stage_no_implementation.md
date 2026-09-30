@@ -15,4 +15,4 @@ metadata:
 - 착수 신호의 예: "작업 시작", "구현 ㄱㄱ", "이제 만들어", plan 승인 후 "진행해". 결정 컨펌과 착수 신호가 한 문장에 섞여 모호하면 **"플랜에 반영만 할까요, 구현까지 갈까요?" 한 줄 질문** — 추측으로 코드부터 만지고 되돌리는 것보다 싸다.
 - **결정이 다 모였다고 자동으로 작업 단계로 넘어가지 않는다.** 단계 전환은 사용자만 선언한다. 플랜 완성 시 "미결 없음 — 착수 신호 주시면 시작" 으로 멈춘다.
 
-관련: [[phase_progression_collaborative]] (= 다단계 **실행** 중 자동 진행 금지 — 본 룰은 그 앞단인 플랜↔작업 **경계**), [[answer_existence_questions_literally]] (= "확인해봐" ≠ 변경 지시), [[preserve_decision_literal]]
+관련: [[phase_progression_collaborative]] (= 다단계 **실행** 중 자동 진행 금지 — 본 룰은 그 앞단인 플랜↔작업 **경계**), [[read_user_words_literally]] (= "확인해봐" ≠ 변경 지시), [[preserve_decision_literal]]

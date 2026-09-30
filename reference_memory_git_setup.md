@@ -93,7 +93,7 @@ git -C "$env:USERPROFILE\.claude\claude_memory" config user.email "saugjong0521@
 
 ## settings.json
 
-`~/.claude/settings.json` 에 **Stop hook 추가하지 말 것**. 자동 commit 은 컨펌 룰 ([feedback_commit_message_format.md](feedback_commit_message_format.md)) 과 충돌해서 2026-05-08 폐기됨. (settings.json 자체는 PC 마다 별도 — sync 대상 아님)
+`~/.claude/settings.json` 에 **Stop hook 추가하지 말 것**. 자동 commit 은 컨펌 룰 ([feedback_git_conventions.md](feedback_git_conventions.md)) 과 충돌해서 2026-05-08 폐기됨. (settings.json 자체는 PC 마다 별도 — sync 대상 아님)
 
 ---
 
@@ -122,7 +122,7 @@ mv ~/.claude/projects/<PROJECT_ID>/memory ~/.claude/claude_memory
 
 # 다중 PC sync
 
-- **저장(변경)**: Claude 가 turn 안에서 diff 기반 commit 메시지 제안 + 컨펌 + 직접 commit + push (Stop hook 자동화 X) — 룰: [feedback_auto_sync_memory.md](feedback_auto_sync_memory.md).
+- **저장(변경)**: Claude 가 turn 안에서 diff 기반 commit 메시지 제안 + 컨펌 + 직접 commit + push (Stop hook 자동화 X) — 룰: [feedback_git_conventions.md](feedback_git_conventions.md).
 - **가져오기**: `git -C ~/.claude/claude_memory pull` (각 PC).
 
 ---

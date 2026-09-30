@@ -19,4 +19,4 @@ metadata:
 3. **미구현 셀 명시 보고** — 스코프 절제로 뺀 기능은 완료 보고에 "X 는 미구현 (필요 시 추가)" 로 명시해 사용자가 결정하게 한다. 조용히 생략 금지.
 4. **관리 동선 통합** — 관리 기능은 새 탭/화면을 만들기 전에, 운영자가 그 대상을 이미 관리하는 기존 화면 (계정 관리 탭 등) 에 통합할지 먼저 검토. "이 버튼을 실제로 누를 사람이 어느 화면에 있나" 를 그려본다.
 
-관련: [[preserve_decision_literal]] (스펙 원문 보존 ≠ 원문 밖 전부 배제), [[cross_repo_audit_before_changes]] (변경 전 매트릭스 점검의 형제 룰), [[no_single_source_generalization]] (대표 1곳 확인으로 전체 단정 금지 — 생성 경로 전수 grep 의 근거).
+관련: [[preserve_decision_literal]] (스펙 원문 보존 ≠ 원문 밖 전부 배제), [[cross_repo_audit_before_changes]] (변경 전 매트릭스 점검의 형제 룰), [[verify_against_code_and_runtime]] (대표 1곳 확인으로 전체 단정 금지 — 생성 경로 전수 grep 의 근거).

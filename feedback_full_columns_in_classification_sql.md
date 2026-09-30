@@ -23,6 +23,6 @@ SQL 로 wallet / row 카테고리 분류 (= docs 의 매트릭스 / 분포 표 �
 - `referral_users` row 존재 + referral_code
 - 관련 컬럼 (= context 별 추가)
 
-→ 카테고리별 wallet 의 모든 sub-state 가 단일 SELECT 의 row 로 보이도록 작성. 그 후 카테고리 결정. 메모리 룰 [[no_guess_in_docs]] 의 SQL 본질화 버전.
+→ 카테고리별 wallet 의 모든 sub-state 가 단일 SELECT 의 row 로 보이도록 작성. 그 후 카테고리 결정. 메모리 룰 [[verify_against_code_and_runtime]] 의 SQL 본질화 버전.
 
-관련: [[no_guess_in_docs]] (= docs 표 작성 시 grep + 본문 read), [[docs_as_guide_code_as_truth]] (= docs status 맹신 금지).
+관련: [[verify_against_code_and_runtime]] (= docs 표 작성 시 grep + 본문 read, docs status 맹신 금지).

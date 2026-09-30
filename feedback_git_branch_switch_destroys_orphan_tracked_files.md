@@ -44,7 +44,7 @@ git log --all --diff-filter=DA --name-only -- .env.dev
 - ❌ "untracked 면 git 영향 없음" — 옛 ref tracked 시 영향
 - ❌ "pytest fail = 파일 없음" — partial 파일 / cwd mismatch / env loader path 등 다양
 
-검증 안 된 일반화는 사용자 직접 증거 (= shell history, IDE 흔적, 사용자 기억) 와 충돌 시 사용자 우선시. 즉답 단정 전 git/file system 의 실제 상태 명령으로 확인 ([[feedback_docs_as_guide_code_as_truth]]).
+검증 안 된 일반화는 사용자 직접 증거 (= shell history, IDE 흔적, 사용자 기억) 와 충돌 시 사용자 우선시. 즉답 단정 전 git/file system 의 실제 상태 명령으로 확인 ([[feedback_verify_against_code_and_runtime]]).
 
 ### E. 다른 branch 의 옛 commit HEAD checkout 시 특히 주의
 local branch 가 오래 stale 한 경우 (= 본 사고 시 local main 이 v0.9 옛 commit 가리킴) checkout 만 해도 옛 working tree 적용. 사용자 환경의 untracked 변경이 silent 하게 덮여쓰기 가능. 그 후 force-pull 또는 reset --hard 시 한 번 더 위험.

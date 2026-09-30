@@ -1,3 +1,10 @@
+---
+name: prod_deploy_needs_explicit_instruction
+description: main push·prd cherry-pick·prd migration·prd 재기동은 사용자가 그 시점에 prod 를 지목했을 때만. "ㄱㄱ/계속" 은 dev 범위, plan 의 prd 단계도 별도 착수 신호
+metadata:
+  type: feedback
+---
+
 # prod 반영은 "prod 올려" 명시 지시가 있을 때만
 
 **Rule:** `main` push · prd clone cherry-pick · prd migration · prd 재기동 요청은 **사용자가 그 시점에 prod 를 지목한 말**("prod 올려줘", "prd 반영")이 있을 때만 한다. plan doc 의 A-N 단계에 "prd 포팅" 이 적혀 있어도, "남은 결정들 ㄱㄱ"·"계속 진행"·"다음 작업" 은 **dev 범위 안의 진행**이지 prod 지시가 아니다. 같은 흐름의 후속이라도 prod 는 "고지만" 이 아니라 **컨펌**이다 ([[feedback_git_conventions]] 의 후속-고지 예외는 dev/develop 에만 적용).

@@ -19,4 +19,4 @@ type: feedback
 3. **충돌이 없으면 그대로 진행** — 모든 변경에 과거 확인을 묻는 게 아니다 ([feedback_no_repeat_decided_questions](feedback_no_repeat_decided_questions.md) 와 균형). 묻는 조건 = "기존 결정과 방향이 어긋날 때"만.
 4. **개정 확정 시 기록:** 결정이 바뀌면 docstring 과 docs 양쪽에 "구 결정 → 신 결정 (날짜, 사용자 원문)" 으로 개정 이력을 남긴다 ([feedback_preserve_decision_literal](feedback_preserve_decision_literal.md)).
 
-관련: [[docs_as_guide_code_as_truth]] (코드 주석의 결정 인용 = 1차 사료), [[preserve_decision_literal]], [[no_repeat_decided_questions]].
+관련: [[verify_against_code_and_runtime]] (코드 주석의 결정 인용 = 1차 사료), [[preserve_decision_literal]], [[no_repeat_decided_questions]].

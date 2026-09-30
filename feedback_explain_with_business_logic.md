@@ -1,5 +1,5 @@
 ---
-name: ""
+name: explain_with_business_logic
 description: "코드 finding/리뷰/동작 설명 시 file:line 인용에 그치지 말고 \"비즈니스적으로 무엇을 의미하는지 + 구체 시나리오/숫자 트레이스 + 유저·사측 영향\"으로 연계 설명"
 metadata: 
   node_type: memory
