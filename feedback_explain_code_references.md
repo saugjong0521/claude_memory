@@ -16,4 +16,4 @@ originSessionId: 3f2c3f1e-54e8-4e89-b366-494e814c2a7c
 - "추가 검토 사항" / "결정 항목" 제시할 때도 항목명만 던지지 말고 풀어서: ❌ `dispatch_attempts 보존 여부` → ✓ `dispatch_attempts (POST 시도 횟수 누적 카운터) — 보존? 또는 새 시즌이라 0 reset?`
 - 코드 위치가 의미 있으면 `[filename.py:line](path)` 링크 포함.
 - 본 규칙은 답변 / 메모리 / docs 본문 / docstring 에 적용.
-- **커밋 메시지는 예외** — `(yyyymmdd) 동사_내용` 형식 ([feedback_commit_message_format](feedback_commit_message_format.md)) 으로 짧게 유지하므로 식별자 동작 설명 생략 가능. 단 commit body (본문) 에 자세한 설명 적을 때는 본 룰 적용.
+- **커밋 메시지는 예외** — `(yyyymmdd) 동사_내용` 형식 ([feedback_git_conventions](feedback_git_conventions.md)) 으로 짧게 유지하므로 식별자 동작 설명 생략 가능. 단 commit body (본문) 에 자세한 설명 적을 때는 본 룰 적용.

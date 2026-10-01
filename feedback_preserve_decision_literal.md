@@ -13,4 +13,4 @@ metadata:
 
 **How to apply:** plan doc 작성 시 § "사용자 결정 사항" 같은 sub-section 에 사용자 원문 quote 보존. e.g. `> 사용자 (2026-05-27): "pre_paid_block은 패스되야함 / v1 입금자도 분모에 포함"`. AskUserQuestion 의 선택지 label 은 보조 정보로만 사용. 의문 시 quote 와 cross-check.
 
-관련: [[no_repeat_decided_questions]] (= 이미 결정된 사항 반복 질문 금지), [[no_guess_in_docs]] (= docs 표 작성 시 grep + 본문 read).
+관련: [[no_repeat_decided_questions]] (= 이미 결정된 사항 반복 질문 금지), [[verify_against_code_and_runtime]] (= docs 표 작성 시 grep + 본문 read).

@@ -1,7 +1,9 @@
 ---
-name: ""
+name: rdbms_upsert_autoinc
+description: UPSERT 는 UPDATE 분기에서도 AUTO_INCREMENT 를 소모한다 — 빈도 높은 sync/polling 은 변경 감지 분기(INSERT/UPDATE/skip)로
 metadata: 
   node_type: memory
+  type: feedback
   originSessionId: bd781d25-8a41-4e59-bf23-afcb25e5fb66
 ---
 

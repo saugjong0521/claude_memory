@@ -23,4 +23,4 @@ LIMIT 1
 
 **How to apply:** VIP 현황 / "현재 source 가 auto 인지 manual 인지" / "현재 grant 인지 revoke 인지" 조회 SQL 작성 시 항상 위 4-tuple ordering 사용. 단일 컬럼 ORDER BY 금지. dual-write 패턴이 아닌 audit-log 패턴 테이블 (이력 누적) 은 일반적으로 같은 원칙 적용.
 
-관련: [[docs_as_guide_code_as_truth]] (docs 의 status 표기 맹신 X, 코드의 ordering 으로 검증).
+관련: [[verify_against_code_and_runtime]] (docs 의 status 표기 맹신 X, 코드의 ordering 으로 검증).

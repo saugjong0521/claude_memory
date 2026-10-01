@@ -1,60 +1,76 @@
 ## 프로세스별 참조 가이드
 
-작업 시작 시점에 해당 process 의 feedback 파일을 read 후 진행. 한 룰이 여러 process 에 속할 수 있음.
+**지시를 받을 때마다** 그 지시의 성격을 아래 표에서 분류하고 해당 행의 `feedback_*` 파일을 read 한 뒤 진행한다. 맞는 행이 없으면 가장 가까운 룰을 적용하고 행 신설을 제안. 한 룰이 여러 행에 속할 수 있다.
 
 | Process | Read 필요 파일 |
 |---------|----------------|
-| **코드 작업 시작** (편집/추가/삭제 / 정책 질문) | check_docs_000_first, docs_as_guide_code_as_truth, explain_code_references, answer_existence_questions_literally |
-| **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization |
-| **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
-| **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
-| **사용자 응답 (질문/응답 형식)** | always_reply_in_korean, answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions, judgment_items_ask_before_work |
-| **손해/낭비/실패 원인 질문 응답** (= "왜 이만큼 들었/느렸/깨졌냐") | answer_the_loss_not_the_accounting, explain_with_business_logic |
-| **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
+| **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean**, **judgment_items_ask_before_work** |
+| **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
+| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), check_docs_000_first |
+| **유저 플로우/기능 변경** | ui_design_principles, **condition_applies_to_every_surface**, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
+| **설정값 추가** (env / config) | config_not_env_for_addresses |
+| **코드 검증 / 테스트 / "구현됐나" 확인** | verify_against_code_and_runtime, no_handtyped_dates_echo_inputs_on_empty |
+| **날짜/연도 들어가는 쿼리·스크립트** | no_handtyped_dates_echo_inputs_on_empty |
+| **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, harness_doc_structure, verify_against_code_and_runtime, verify_edit_applied_before_reporting |
+| **대량 기계적 변경** (일괄 삭제·정규식 치환) | verify_edit_applied_before_reporting, verify_against_code_and_runtime |
+| **계획 문서대로 항목 착수** | verify_against_code_and_runtime |
+| **새 docs/000.* 작성 · 매트릭스/분류 표** | harness_doc_structure, verify_against_code_and_runtime, full_columns_in_classification_sql |
+| **발견·이상 보고** | search_transcripts_before_denying_history (사용자 기억과 어긋날 때), no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
+| **리워드/지급 구조 설계·구현·검증** | reward_abuse_scenario_check, answer_the_loss_not_the_accounting, preserve_decision_literal |
+| **"없다/불가능" 답변** ("그런 기획·논의는 없었다" 포함) | **search_transcripts_before_denying_history**, verify_ecosystem_before_saying_impossible, verify_against_code_and_runtime |
+| **손해/낭비/실패 원인 질문** | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal, judgment_items_ask_before_work |
-| **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
-| **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
-| **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
-| **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes |
-| **Git commit (코드/docs)** | commit_message_format, commit_no_claude_coauthor |
-| **병렬 세션/에이전트가 같은 repo 에서 동시 작업** | stage_only_own_changes_when_parallel, commit_message_format |
-| **Git push** | git_push_confirm, commit_message_format |
-| **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
-| **RDBMS sync 코드 작성** (UPSERT / INSERT) | rdbms_upsert_autoinc |
-| **실행 중 서비스 운영** (재시작/중지/리로드/배포·프로세스 상태 확인) | verify_runtime_supervisor_before_restart, docs_as_guide_code_as_truth |
-| **멀티에이전트 워크플로 실행** (= Workflow / 대량 Agent fan-out) | confirm_before_large_agent_fanout |
-| **메모리 변경 commit** | auto_sync_memory, commit_message_format, commit_no_claude_coauthor |
-| **새 PC memory 셋업** | reference_memory_git_setup, auto_sync_memory |
+| **플랜(설계) 단계 · plan doc 작성** | **condition_applies_to_every_surface**(표면 표), plan_stage_no_implementation, plan_review_artifact_before_work, preserve_decision_literal, harness_doc_structure, phase_progression_collaborative |
+| **Frontend / Backend 양쪽 영향 변경 · 새 엔티티/모듈 등록** | cross_repo_audit_before_changes, new_entity_crud_completeness, verify_against_code_and_runtime |
+| **Git commit / push / 메모리 commit** | git_conventions, stage_only_own_changes_when_parallel (= 같은 repo 에 다른 세션이 동시 작업할 때) |
+| **Git checkout / switch / reset --hard** | git_branch_switch_destroys_orphan_tracked_files |
+| **RDBMS sync 코드 (UPSERT)** | rdbms_upsert_autoinc |
+| **실행 중 서비스 운영** (재시작·배포·프로세스 확인) | verify_runtime_supervisor_before_restart, verify_against_code_and_runtime, bounded_polling_loops |
+| **배포/승격** (dev→prd, "배포 가능" 전제 답변) | **prod_deploy_needs_explicit_instruction**, app_version_bump_includes_apk (prod 는 명시 지시만), verify_against_code_and_runtime (파일≠인프라 3종 probe), verify_runtime_supervisor_before_restart, cross_repo_audit_before_changes, git_conventions, **adversarial_verify_before_prod** (보안 패치·"적대적으로 확인") |
+| **멀티에이전트 워크플로 / 대량 Agent fan-out** | confirm_before_large_agent_fanout, **all_user_facing_output_in_korean** (프롬프트에 "보고서는 한국어로") |
+| **새 PC memory 셋업** | reference_memory_git_setup, git_conventions |
 
 ## 전체 인덱스
 
-- [No Claude co-author in commits](feedback_commit_no_claude_coauthor.md) — omit `Co-Authored-By: Claude` trailer from all git commit messages
-- [Answer existence questions literally](feedback_answer_existence_questions_literally.md) — "있어?" 류에는 Yes/No 만 먼저, 구현은 명시적 지시 이후
-- [Read user words literally](feedback_read_user_words_literally.md) — "지금/현재/fresh/최신" 같은 시점·범위 키워드를 IDE 정황·기존 파일로 치환 금지 + "필요하면 별도로 말씀" 류 책임 회피 단서 금지
-- [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 다단계 phase 에서 사용자가 각 phase 마다 데이터·결정 입력, 자동 진행 금지
-- [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 코드 작업 시작 전 프로젝트 `docs/000.*` (3자리 prefix) 확인 후 진행 (UI 라벨 의역 등 가드 정책 1차 참조)
-- [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 코드/정책/구조 변경 시 docs/000 의 영향 섹션 (§5/§6/§10/§11 + §13~§15 deep-dive 매트릭스) cross-section sync 갱신 (drift 방지)
-- [Sync memory to git (manual)](feedback_auto_sync_memory.md) — 메모리 변경은 Claude 가 diff 기반 메시지 제안+컨펌+직접 commit+push. Stop hook 사용 X (컨펌 룰과 충돌)
-- [메모리 구조 + git sync 셋업 (리눅스/Mac/Windows)](reference_memory_git_setup.md) — 장기/중기/단기 3계층 구조 + 장기 메모리를 `~/.claude/claude_memory/` + `~/.claude/CLAUDE.md`(@import) 로 셋업·sync. **3 OS 공통** (`~/.claude/` 동일, Git Bash 권장 / Windows 네이티브는 `%USERPROFILE%`). 옛 `projects/<id>/memory/` 방식 폐기 — 마이그레이션 시 중복 로드 주의. hook 사용 X
-- [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식. commit message 는 예외 (짧은 형식 유지)
-- [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
-- [Git push 시 사용자 confirm 받기](feedback_git_push_confirm.md) — commit 까지는 자동 OK, push 전엔 반드시 컨펌. 자발적 push 금지 (= remote 영향 + revert 어려움)
-- [병렬 세션 중엔 내 세션 변경만 경로 지정해 커밋](feedback_stage_only_own_changes_when_parallel.md) — 다른 세션이 동시 작업 중이면 `git add -A`/`commit -a` 금지. 내가 만든 경로만 명시 stage, 기능 단위로 분리 커밋, 공용 파일은 hunk 나눠서
-- [RDBMS UPSERT 시 AUTO_INCREMENT 폭발 주의](feedback_rdbms_upsert_autoinc.md) — `INSERT ... ON DUPLICATE KEY UPDATE` 또는 `ON CONFLICT` 가 UPDATE 분기에서도 AUTO_INC +1 소비 → 빈도 높은 sync 코드면 변경 감지 분기 권장
-- [Harness doc 권장 구조](feedback_harness_doc_structure.md) — `docs/000.*.md` 작성 시 §1 역할 → §2 한눈에 보기 → §3 시스템 흐름 → §4 시나리오 → §5+ 인덱스 → Gotchas 골격. 변경이력 섹션은 권장 O 이되 git commit 시점에만 1 entry (표 1행) append (작업 중간 X)
-- [docs 추측 금지, grep 으로만 채움](feedback_no_guess_in_docs.md) — 매트릭스/인덱스/카탈로그 표 작성 시 행마다 코드 grep + service 본문 read, docs cross-match 만으로 단정 X. docs 사용 측 짝꿍 = docs_as_guide_code_as_truth
-- [docs는 지침서, 코드가 진실](feedback_docs_as_guide_code_as_truth.md) — docs/하네스는 어디를 읽을지 안내하는 지침서로만 사용. 검증/테스트/status 확인은 코드 직접 read. docs 의 ✅/🔴 등 status 표기 맹신 금지
-- [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — branch 전환 / `reset --hard` 가 옛 ref 의 tracked 였던 파일을 working tree 에서 자동 삭제. `.gitignore` 보호 무관. checkout/reset 전 `.env*`/secret 백업 + Claude 의 일반화 단정 금지
-- [vip_membership_event 최신 행은 MAX(id) 금지](feedback_vip_event_ordering_not_max_id.md) — kstadium-referral-backend 의 VIP 현황 SQL 은 `(effective_at, block_number, log_index, id) DESC` 정렬 필수. MAX(id) 만 쓰면 manual/auto 행 순서 뒤집힘
-- [사용자 결정은 자연어 quote 로 보존](feedback_preserve_decision_literal.md) — AskUserQuestion 선택지 label 만으로 본질 의도 추적 부족. plan doc § 안에 사용자 원문 quote
-- [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. no_repeat_decided_questions 와는 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
-- [이미 결정된 사항 반복 질문 금지](feedback_no_repeat_decided_questions.md) — "안전한 척" 모든 분기 묻기 금지. 기존 정책의 자동 적용은 자체 판단 + 한 줄 안내
-- [분류 SQL 은 모든 sanity check 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md) — 카테고리 분류 시 exclusion / pre_genesis / balance_row / 등 모든 영향 컬럼 한 SELECT 에. 부분 query 단정 금지
-- [Frontend / Backend cross-check 매트릭스 (변경 전)](feedback_cross_repo_audit_before_changes.md) — 양쪽 영향 변경 시 endpoint method+path 매트릭스 + ADMIN_PATH 사용 + helper method coverage + 직접 호출 4 차원 점검. trial-and-error 금지
-- [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 글로벌 memory dir 는 Claude 의 일반 process/생각/선호(feedback 룰)만. 프로젝트 고유 사실(테스트 실행법·구조·정책)은 해당 repo(docs/000 하네스·README 등)에 기록
-- [발견·코드 설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — file:line 인용에 그치지 말고 비즈니스 의미 + 시나리오/숫자 트레이스 + 유저·사측 영향으로 설명. 코드 변경 제안도 동일
-- [손해 질문엔 계측 아닌 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "왜 낭비/손해/실패했냐"엔 "숫자는 맞으니 정상"으로 시스템 변호 금지. 그 결과가 정당했는지를 먼저. "재현됨≠올바름". (2026-06-12 토큰폭주 조사서 내가 범한 오판)
-- [실행 중 서비스는 런타임 supervisor가 진실](feedback_verify_runtime_supervisor_before_restart.md) — 재시작/중지/리로드는 repo 스크립트 아닌 라이브 supervisor(systemd 등) 확인. negative("X가 안 띄움")는 positive 식별 probe 강제, PPID=1은 분기. mutation 전 restart 정책 확인. docs_as_guide_code_as_truth 의 런타임 확장
-- [단일 소스 일반화 단정 금지 — 형제와 cross-check, build≠런타임](feedback_no_single_source_generalization.md) — 한 파일/관찰로 동작 단정 금지, **동작하는 형제와 cross-check**. 새 엔티티는 module `forFeature` + `app.module.ts` forRoot `entities` **둘 다** 등록(data-source 부재로 auto-load 단정 X). **build/typecheck 통과 ≠ 런타임 정상**(DI/ORM 메타데이터 lazy → 첫 호출에 터짐) → 엔드포인트 실제 호출 또는 wiring 대조. (2026-06-26 Round 엔티티 미등록 → closed-tournaments 500)
-- [에이전트 fan-out 은 토큰 3구간 + 작업 체인 누적 판정](feedback_confirm_before_large_agent_fanout.md) — 판정은 개수 아닌 **예상 토큰 3구간 (≤20만 자유 / ≤60만 한줄고지 / >60만 컨펌)** + **판정 단위 = 배치 1개가 아니라 작업 체인 누적** (워크플로 끝날 때마다 실측 totalTokens 합산해 재판정). 무거운 에이전트 ≈4.5~5만/개, **검증류는 ~9만/개** (휴리스틱 2배). 1:1 검증은 상한 안에서만, 무상한 fan-out 구조 금지, 필요성 선판단(한 컨텍스트면 main loop). 사고 2건: 2026-06-12 (52ag=234만 크래시) + **2026-07-02 (≤10개짜리 워크플로 3연속 = 누적 127.5만 = 개수 룰 전부 통과하고도 세션 한도 소진 — 배치 단위 판정이 구멍)**. "재현됨≠올바름", "정상이라 괜찮다" 금지 — 사전 고지+누적 상한으로 능동 방어
-- [항상 한글로 답변](feedback_always_reply_in_korean.md) — 영문 문서·문구 다루는 작업이어도 설명은 한글. 한 번 지시받으면 세션 내내 유지 (2026-09-29 세 번 연속 영어 답변으로 항의받음)
+- [사용자에게 보이는 출력은 전부 한국어](feedback_all_user_facing_output_in_korean.md) — 서브에이전트·워크플로 보고서도 포함, 프롬프트에 "보고서는 한국어로" 명시
+- [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만
+- [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
+- [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
+- [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
+- [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
+- [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. no_repeat_decided_questions 와 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
+- [사용자 결정은 원문 quote 로 보존](feedback_preserve_decision_literal.md) — plan doc § 안에 자연어 원문
+- [조건은 모든 표면에 대해 확인](feedback_condition_applies_to_every_surface.md) — 노출·발생 조건을 받으면 진입 배너·선택 화면·본 화면·제출까지 표로 나열해 확인. 용어를 컴포넌트 하나에 혼자 대응 금지, 내가 정한 조건은 결정 항목으로, 진입점 ⊆ 완료 가능 (2026-09-29 현장 퀘스트 배너 3km↔10m)
+- ["없었다" 단정 전 대화 기록 원문 검색](feedback_search_transcripts_before_denying_history.md) — docs 는 내가 쓴 2차 사료. 사용자 기억을 가설로 두고 `~/.claude/projects/*.jsonl` 의 사용자 발화를 찾는다. "문서에 없다" ≠ "논의가 없었다" (2026-09-29)
+- [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
+- [웹앱(휴대폰+웹) 화면 규격](feedback_webapp_responsive_layout.md) — 유동형 + 기준 360 + 최소 344(아래는 가로 스크롤) + md 768, 글자 5단계(캡션 12·본문 14·제목 16), extrabold 금지, 카드 패딩 16, 한글 keep-all, 검수 344/360/390/820 스크린샷
+- [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
+- [코드·런타임으로 검증](feedback_verify_against_code_and_runtime.md) — docs·주석·내 계획서·한 파일은 지도일 뿐. 표는 행마다 grep, 형제와 cross-check, build≠런타임, 워크플로 파일≠인프라(DNS·secrets·실행이력 probe)
+- [Check docs/000 before code tasks](feedback_check_docs_000_first.md) — 작업 전 프로젝트 `docs/000.*` 확인
+- [Update docs/000 after code changes](feedback_update_docs_000_after_changes.md) — 영향 섹션 cross-section sync
+- [Harness doc 권장 구조](feedback_harness_doc_structure.md) — §1 역할→§2 한눈에→§3 흐름→§4 시나리오→인덱스→Gotchas. 변경이력은 commit 시점에 1행
+- [기존 로직 변경 전 결정 이력 탐독·충돌 고지](feedback_check_design_history_before_changes.md) — 어긋나면 "기존엔 ~로 설계 — 바꾸는 건데 괜찮냐" 먼저
+- [편집 적용 확인 후 보고 + 대량 삭제는 파서로](feedback_verify_edit_applied_before_reporting.md) — 재조회로 확인, `assert` 앵커, 린터·빌드·런타임 3중, **cherry-pick 체인은 커밋별 종료코드 + push 전 커밋 수 assert** (2026-08-31)
+- [Explain code references](feedback_explain_code_references.md) — 식별자 언급 시 "X (= Y 하는 것)"
+- [발견·설명은 비즈니스 로직과 연계](feedback_explain_with_business_logic.md) — 의미 + 시나리오/숫자 + 유저·사측 영향
+- [손해 질문엔 정당성으로 답하라](feedback_answer_the_loss_not_the_accounting.md) — "숫자는 맞으니 정상" 금지, 재현됨≠올바름
+- [리워드 구조는 어뷰즈 시나리오 검증](feedback_reward_abuse_scenario_check.md) — 총 지급 상한·다계정·트리거 주체-비용 정렬, fan-out 지급 경보
+- [새 엔티티는 CRUD 수명주기 완결](feedback_new_entity_crud_completeness.md) — 생성 경로 전수 grep, 운영 CRUD 매트릭스, 미구현 명시, 기존 운영 화면 통합 검토
+- [테스트 도구는 기능 변경과 함께 갱신](feedback_sync_test_tools_with_feature_changes.md) — 유저와 같은 진입점, 내부 함수 직행 금지
+- [FE/BE cross-check 매트릭스](feedback_cross_repo_audit_before_changes.md) — endpoint 매트릭스·PATH 사용·helper 커버리지·직접 호출 4차원
+- [prod 반영은 명시 지시만](feedback_prod_deploy_needs_explicit_instruction.md) — "ㄱㄱ/계속" 은 dev 범위. plan 의 prd 단계도 별도 착수 신호 (2026-09-03 미승인 배포 revert)
+- [병렬 세션 중엔 내 세션 변경만 경로 지정해 커밋](feedback_stage_only_own_changes_when_parallel.md) — 다른 세션이 같은 repo 에서 동시 작업 중이면 `git add -A`/`commit -a` 금지. 내가 만든 경로만 명시 stage, 기능 단위 분리 커밋, 공용 파일은 hunk 나눠서
+- [Git 컨벤션](feedback_git_conventions.md) — `(yyyymmdd) 동사_내용` 영어, co-author 금지, commit 메시지·push 컨펌 (같은 흐름의 후속은 고지만), 메모리 repo 동일
+- [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — 전환 전 `.env*` 백업
+- [실행 중 서비스는 supervisor 가 진실](feedback_verify_runtime_supervisor_before_restart.md) — systemd 확인, env 격리 기동 스크립트, sudo 재기동은 사용자 핸드오프, **unit 이름은 폴더명에서 유추 말고 조회해서 복사** (boomerang prd = `kstadium-shop-prd-backend`)
+- ["없다/불가능" 단정 전 생태계 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치 버전 한계 ≠ 세상에 없음
+- [날짜 리터럴 금지 + 빈 결과는 입력 echo](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도는 시스템 날짜에서, "성공+빈 결과" 면 파라미터 먼저
+- [prod 전 적대적 검증 = 자체 공격 재현 + 독립 에이전트 1개](feedback_adversarial_verify_before_prod.md) — 자체 점검은 내 전제를 못 의심한다 (2026-09-01: 에이전트 15만 토큰, 실효 4건 중 1건이 내 수정의 전제 오류)
+- [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개, **감사류 14~21만/개** (2026-08-31 실측)
+- [앱 버전 올림 = 웹 배포 + APK 빌드·업로드까지](feedback_app_version_bump_includes_apk.md) — boomerang 손님앱, dev·prod 각 체크아웃에서 build_android.sh, app.json 으로 확인 (2026-09-15)
+- [폴링 루프는 상한 + 빈 조회값 즉시 실패](feedback_bounded_polling_loops.md) — 검증된 명령 변형 시 단독 실행으로 출력 확인, 긴 대기는 별도 명령 (2026-09-15 gh run id 빈 값 20분)
+- [분류 SQL 은 모든 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md)
+- [RDBMS UPSERT AUTO_INCREMENT 주의](feedback_rdbms_upsert_autoinc.md)
+- [프로젝트별 메모리는 프로젝트 안에](feedback_project_memory_stays_in_project.md) — 여기는 Claude 의 일반 process/선호만
+- [vip_membership_event 최신 행 정렬](feedback_vip_event_ordering_not_max_id.md) — (referral 프로젝트 고유 — repo 가 이 PC 에 있을 때 docs/000 로 이관)
+- [메모리 구조 + git sync 셋업](reference_memory_git_setup.md) — 3계층, `~/.claude/claude_memory/` + `CLAUDE.md` @import, hook 사용 X
