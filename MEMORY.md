@@ -17,6 +17,7 @@
 | **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
 | **새 엔티티/모듈/프로바이더 등록** (DI/ORM wiring 추가) | no_single_source_generalization, cross_repo_audit_before_changes |
 | **Git commit (코드/docs)** | commit_message_format, commit_no_claude_coauthor |
+| **병렬 세션/에이전트가 같은 repo 에서 동시 작업** | stage_only_own_changes_when_parallel, commit_message_format |
 | **Git push** | git_push_confirm, commit_message_format |
 | **Git checkout / switch / reset --hard** (branch 전환 또는 옛 ref 적용) | git_branch_switch_destroys_orphan_tracked_files |
 | **RDBMS sync 코드 작성** (UPSERT / INSERT) | rdbms_upsert_autoinc |
@@ -38,6 +39,7 @@
 - [Explain code references](feedback_explain_code_references.md) — 함수/변수/테이블/컬럼 언급 시 항상 "X (= Y 하는 것)" 형식. commit message 는 예외 (짧은 형식 유지)
 - [Commit message 포맷 컨벤션](feedback_commit_message_format.md) — `(yyyymmdd) 동사_내용` + `-`/`_` 구분 + 다중은 `,` + Claude co-author 미포함 + **반드시 커밋 전 메시지 컨펌**
 - [Git push 시 사용자 confirm 받기](feedback_git_push_confirm.md) — commit 까지는 자동 OK, push 전엔 반드시 컨펌. 자발적 push 금지 (= remote 영향 + revert 어려움)
+- [병렬 세션 중엔 내 세션 변경만 경로 지정해 커밋](feedback_stage_only_own_changes_when_parallel.md) — 다른 세션이 동시 작업 중이면 `git add -A`/`commit -a` 금지. 내가 만든 경로만 명시 stage, 기능 단위로 분리 커밋, 공용 파일은 hunk 나눠서
 - [RDBMS UPSERT 시 AUTO_INCREMENT 폭발 주의](feedback_rdbms_upsert_autoinc.md) — `INSERT ... ON DUPLICATE KEY UPDATE` 또는 `ON CONFLICT` 가 UPDATE 분기에서도 AUTO_INC +1 소비 → 빈도 높은 sync 코드면 변경 감지 분기 권장
 - [Harness doc 권장 구조](feedback_harness_doc_structure.md) — `docs/000.*.md` 작성 시 §1 역할 → §2 한눈에 보기 → §3 시스템 흐름 → §4 시나리오 → §5+ 인덱스 → Gotchas 골격. 변경이력 섹션은 권장 O 이되 git commit 시점에만 1 entry (표 1행) append (작업 중간 X)
 - [docs 추측 금지, grep 으로만 채움](feedback_no_guess_in_docs.md) — 매트릭스/인덱스/카탈로그 표 작성 시 행마다 코드 grep + service 본문 read, docs cross-match 만으로 단정 X. docs 사용 측 짝꿍 = docs_as_guide_code_as_truth
