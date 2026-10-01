@@ -8,10 +8,10 @@
 | **코드 검증 / 테스트** | docs_as_guide_code_as_truth, no_guess_in_docs, no_single_source_generalization |
 | **코드 변경 완료 → docs 갱신** | update_docs_000_after_changes, no_guess_in_docs, harness_doc_structure, explain_code_references |
 | **새 docs/000.* 작성** | harness_doc_structure, no_guess_in_docs, explain_code_references |
-| **사용자 응답 (질문/응답 형식)** | always_reply_in_korean, answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions |
+| **사용자 응답 (질문/응답 형식)** | always_reply_in_korean, answer_existence_questions_literally, read_user_words_literally, phase_progression_collaborative, explain_code_references, no_repeat_decided_questions, judgment_items_ask_before_work |
 | **손해/낭비/실패 원인 질문 응답** (= "왜 이만큼 들었/느렸/깨졌냐") | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **데이터 추출 / 스냅샷 요청 처리** | read_user_words_literally, docs_as_guide_code_as_truth |
-| **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal |
+| **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal, judgment_items_ask_before_work |
 | **카테고리/분류 표 작성** (= docs 매트릭스 / 분포 표) | no_guess_in_docs, full_columns_in_classification_sql |
 | **plan doc 작성** (= docs/012~014 같은) | preserve_decision_literal, harness_doc_structure, no_guess_in_docs |
 | **Frontend / Backend 양쪽 영향 변경** (= 새 endpoint / schema / helper) | cross_repo_audit_before_changes, no_guess_in_docs |
@@ -47,6 +47,7 @@
 - [git checkout/reset 가 옛 tracked 파일 삭제](feedback_git_branch_switch_destroys_orphan_tracked_files.md) — branch 전환 / `reset --hard` 가 옛 ref 의 tracked 였던 파일을 working tree 에서 자동 삭제. `.gitignore` 보호 무관. checkout/reset 전 `.env*`/secret 백업 + Claude 의 일반화 단정 금지
 - [vip_membership_event 최신 행은 MAX(id) 금지](feedback_vip_event_ordering_not_max_id.md) — kstadium-referral-backend 의 VIP 현황 SQL 은 `(effective_at, block_number, log_index, id) DESC` 정렬 필수. MAX(id) 만 쓰면 manual/auto 행 순서 뒤집힘
 - [사용자 결정은 자연어 quote 로 보존](feedback_preserve_decision_literal.md) — AskUserQuestion 선택지 label 만으로 본질 의도 추적 부족. plan doc § 안에 사용자 원문 quote
+- [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. no_repeat_decided_questions 와는 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
 - [이미 결정된 사항 반복 질문 금지](feedback_no_repeat_decided_questions.md) — "안전한 척" 모든 분기 묻기 금지. 기존 정책의 자동 적용은 자체 판단 + 한 줄 안내
 - [분류 SQL 은 모든 sanity check 컬럼 한 query 에](feedback_full_columns_in_classification_sql.md) — 카테고리 분류 시 exclusion / pre_genesis / balance_row / 등 모든 영향 컬럼 한 SELECT 에. 부분 query 단정 금지
 - [Frontend / Backend cross-check 매트릭스 (변경 전)](feedback_cross_repo_audit_before_changes.md) — 양쪽 영향 변경 시 endpoint method+path 매트릭스 + ADMIN_PATH 사용 + helper method coverage + 직접 호출 4 차원 점검. trial-and-error 금지
