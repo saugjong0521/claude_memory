@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-**"앱 버전 0.1.7 ㄱㄱ" = package.json 올림 → develop/main push(웹 배포) → `scripts/build_android.sh dev`(boomerang-dev, develop) → `scripts/build_android.sh prod`(boomerang-prod, main) → `downloads/app.json` 의 version 으로 확인.** 셋 중 하나라도 빠지면 버전 작업이 끝난 게 아니다.
+**"앱 버전 0.1.7 ㄱㄱ" = package.json 올림 → develop/main push(웹 배포) → `scripts/build_android.sh dev`(~/boomerang-shop/boomerang-shop-dev 체크아웃, develop) → `scripts/build_android.sh prod`(~/boomerang-shop/boomerang-shop-prod 체크아웃, main) → `downloads/app.json` 의 version 으로 확인.** 셋 중 하나라도 빠지면 버전 작업이 끝난 게 아니다.
 
 **Why:** 2026-09-15 — "0.1.7 ㄱㄱ" 에 package.json 만 올리고 prod 웹 배포까지 확인한 뒤 "dev·prod 모두 0.1.7" 로 보고. admin 앱 버전 패널의 Android 앱은 어제 빌드한 v0.1.6 그대로였고, 사용자: "0.1.7만들면 배포까지 되야지 정상이지 뭐하는짓?". APK 는 별도 산출물(Capacitor 빌드 → S3 `downloads/boomerang(-dev).apk` + `app.json`)이라 package.json 만으론 안 바뀐다. 강제 업데이트 설정(최소 0.1.6 / 안내 0.1.7)까지 APK 없이 걸면 사용자가 옛 APK 를 다시 받는다.
 

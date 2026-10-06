@@ -36,4 +36,5 @@ originSessionId: 552687bc-ce8e-4bce-96e7-4e732ad1fbd9
 8. **재기동 명령을 사용자에게 건널 때 unit 이름은 추측하지 말고 그 자리에서 조회한다** (2026-09-11 사용자 "prod->prd 로 메모리룰 박아줘"):
    `grep -l "<WorkingDirectory 경로>" /etc/systemd/system/*.service` 또는 `systemctl list-units --all | grep -i <프로젝트>` 로 **실제 unit 이름을 읽어서** 명령에 넣는다.
    - **Why**: boomerang 프로젝트는 2026-09-09 폴더를 `boomerang-dev/` · `boomerang-prod/` 로 바꿨지만 systemd unit 은 옛 이름 `kstadium-shop-backend`(dev) · **`kstadium-shop-prd-backend`**(prd) 그대로다. 폴더명에서 유추해 `boomerang-prod-backend` 로 안내 → `Unit not found`. 폴더·repo·도메인 이름과 unit 이름은 **서로 독립**이고, 한 번 정착한 unit 이름은 폴더가 바뀌어도 안 바뀐다.
+   - **2026-10-06 개편 뒤 현재값**: 폴더 `~/boomerang-shop/boomerang-shop-dev/`·`boomerang-shop-prod/`, unit `boomerang-shop-dev-backend`(dev :8003)·`boomerang-shop-prod-backend`(prod :8004), logrotate `/etc/logrotate.d/boomerang-shop`. 이름이 같은 축이 됐어도 **명령에 넣기 전 조회**는 그대로 한다 — 2026-10-06 이전 docs·대화에는 옛 이름이 그대로 남아 있다.
    - 환경 약어도 프로젝트마다 다르다 (이 프로젝트: 폴더 `prod`, unit·alembic·스크립트 `prd`). 명령에 쓸 이름은 항상 조회 결과를 그대로 복사한다.
