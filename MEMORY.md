@@ -6,7 +6,7 @@
 |---------|----------------|
 | **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean**, **judgment_items_ask_before_work** |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
-| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), **ask_before_screenshot_sweep**(전수 스크린샷은 묻고), check_docs_000_first |
+| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), **ask_before_screenshot_sweep**(전수 스크린샷은 묻고), **document_deliverable_mock_before_build**(보고서·문서·온보딩 화면), check_docs_000_first |
 | **유저 플로우/기능 변경** | ui_design_principles, **condition_applies_to_every_surface**, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
 | **설정값 추가** (env / config) | config_not_env_for_addresses |
 | **코드 검증 / 테스트 / "구현됐나" 확인** | verify_against_code_and_runtime, no_handtyped_dates_echo_inputs_on_empty, ask_before_screenshot_sweep (느린 전수 검수 전 확인) |
@@ -20,7 +20,7 @@
 | **"없다/불가능" 답변** ("그런 기획·논의는 없었다" 포함) | **search_transcripts_before_denying_history**, verify_ecosystem_before_saying_impossible, verify_against_code_and_runtime |
 | **손해/낭비/실패 원인 질문** | answer_the_loss_not_the_accounting, explain_with_business_logic |
 | **다단계 phase 작업** | phase_progression_collaborative, preserve_decision_literal, judgment_items_ask_before_work |
-| **플랜(설계) 단계 · plan doc 작성** | **condition_applies_to_every_surface**(표면 표), plan_stage_no_implementation, plan_review_artifact_before_work, preserve_decision_literal, harness_doc_structure, phase_progression_collaborative |
+| **플랜(설계) 단계 · plan doc 작성** | **condition_applies_to_every_surface**(표면 표), plan_stage_no_implementation, plan_review_artifact_before_work, **document_deliverable_mock_before_build**(보고서·문서형 산출물은 한 절 목업), preserve_decision_literal, harness_doc_structure, phase_progression_collaborative |
 | **Frontend / Backend 양쪽 영향 변경 · 새 엔티티/모듈 등록** | cross_repo_audit_before_changes, new_entity_crud_completeness, verify_against_code_and_runtime |
 | **Git commit / push / 메모리 commit** | git_conventions, stage_only_own_changes_when_parallel (= 같은 repo 에 다른 세션이 동시 작업할 때) |
 | **Git checkout / switch / reset --hard** | git_branch_switch_destroys_orphan_tracked_files |
@@ -36,6 +36,7 @@
 - [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만, "X 설명하고 진행" 은 설명→답변→정리→진행
 - [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
+- [보고서·문서형 산출물은 구현 전 한 절 목업으로 모양 확인](feedback_document_deliverable_mock_before_build.md) — "보고서/문서/온보딩" 은 흐름 순서의 서술형, 층 표 승인 ≠ 화면 승인, 기준은 트리 + 실제 건 예시 (2026-10-09 scope-validate 정합성 보고서 재구성 100만 토큰)
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
 - [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. no_repeat_decided_questions 와 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
