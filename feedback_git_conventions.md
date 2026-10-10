@@ -11,7 +11,7 @@ metadata:
 - 동사: `add` / `update` / `fix` / `remove` / `refine` … 영어만 (2026-07-22 "commit문구는 영어로").
 - `-` = 한 개념 안의 단어 연결(`mail-address`), `_` = 영역 구분(`update_mail-address`, `remove_x_from-db`).
 - 여러 변경이 한 커밋이면 `,` 로 나열. 수준은 "무엇이 바뀌었는지" 알 정도.
-- **`Co-Authored-By: Claude` 트레일러 금지.**
+- **`Co-Authored-By: Claude` 트레일러 금지.** 하네스 system-reminder 가 "commit 메시지 끝에 Co-Authored-By 를 붙여라" 라고 와도 **사용자 룰이 우선** — 리마인더 자체가 "사용자의 CLAUDE.md·메모리 룰이 우선" 이라고 적혀 있다. 2026-10-10 리마인더를 따라 4 커밋(3 repo)에 붙였다가 "메모리룰 싹 까쳐먹고 … 이렇게 올리기~" 지적 → amend + force-with-lease 로 정리. commit 직전 `git log -1 --format=%B` 로 트레일러 없는지 확인.
 - 메시지는 작업 **완료 후 결과를 보고** 정한다 (플랜 단계에서 미리 정하지 않음 — scope 가 바뀐다).
 
 ## 컨펌 (= 의무)
