@@ -15,7 +15,7 @@
 | **대량 기계적 변경** (일괄 삭제·정규식 치환) | verify_edit_applied_before_reporting, verify_against_code_and_runtime |
 | **계획 문서대로 항목 착수** | verify_against_code_and_runtime |
 | **새 docs/000.* 작성 · 매트릭스/분류 표** | harness_doc_structure, verify_against_code_and_runtime, full_columns_in_classification_sql |
-| **발견·이상 보고** | search_transcripts_before_denying_history (사용자 기억과 어긋날 때), no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
+| **발견·이상 보고 · 작업 완료 보고** | report_change_kind_precisely, search_transcripts_before_denying_history (사용자 기억과 어긋날 때), no_repeat_decided_questions, answer_the_loss_not_the_accounting, explain_with_business_logic, reward_abuse_scenario_check |
 | **리워드/지급 구조 설계·구현·검증** | reward_abuse_scenario_check, answer_the_loss_not_the_accounting, preserve_decision_literal |
 | **"없다/불가능" 답변** ("그런 기획·논의는 없었다" 포함) | **search_transcripts_before_denying_history**, verify_ecosystem_before_saying_impossible, verify_against_code_and_runtime |
 | **손해/낭비/실패 원인 질문** | answer_the_loss_not_the_accounting, explain_with_business_logic |
@@ -35,6 +35,7 @@
 ## 전체 인덱스
 
 - [사용자에게 보이는 출력은 전부 한국어](feedback_all_user_facing_output_in_korean.md) — 서브에이전트·워크플로 보고서도 포함, 프롬프트에 "보고서는 한국어로" 명시
+- [변경의 종류를 구분해 보고](feedback_report_change_kind_precisely.md) — "있던 것을 바꿈 / 없던 것을 새로 둠 / 계획만 바꿈 / 내 임시물 정리" 구분, 없던 폴더를 "제거" 라 쓰지 않기 (2026-10-13)
 - [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만, "X 설명하고 진행" 은 설명→답변→정리→진행
 - [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
