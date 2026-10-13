@@ -70,7 +70,7 @@
 - ["없다/불가능" 단정 전 생태계 검색](feedback_verify_ecosystem_before_saying_impossible.md) — 설치 버전 한계 ≠ 세상에 없음
 - [날짜 리터럴 금지 + 빈 결과는 입력 echo](feedback_no_handtyped_dates_echo_inputs_on_empty.md) — 연도는 시스템 날짜에서, "성공+빈 결과" 면 파라미터 먼저
 - [prod 전 적대적 검증 = 자체 공격 재현 + 독립 에이전트 1개](feedback_adversarial_verify_before_prod.md) — 자체 점검은 내 전제를 못 의심한다 (2026-09-01: 에이전트 15만 토큰, 실효 4건 중 1건이 내 수정의 전제 오류)
-- [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개, **감사류 14~21만/개** (2026-08-31 실측)
+- [에이전트 fan-out 토큰 3구간 + 체인 누적](feedback_confirm_before_large_agent_fanout.md) — ≤20만 자유 / ≤60만 고지 / >60만 컨펌, 검증류 ~9만/개, **감사·코드 독해류 개당 30만으로 잡고 3개면 컨펌** (2026-08-31·10-06 실측)
 - [앱 버전 올림 = 웹 배포 + APK 빌드·업로드까지](feedback_app_version_bump_includes_apk.md) — boomerang 손님앱, dev·prod 각 체크아웃에서 build_android.sh, app.json 으로 확인 (2026-09-15)
 - [폰에서만 나는 문제는 진단 빌드 먼저](feedback_device_only_bug_instrument_before_guessing.md) — 추측 빌드 반복 금지, 단계 진단을 서버 로그로(keepalive·await·빌드 꼬리표), 같은 파일명 APK 는 CDN 캐시 → `?v=sha`, **Capacitor 플러그인 Proxy 를 async 에서 return/await 하면 thenable 로 영원히 멈춤**, 1회 가드는 로그아웃에 리셋 (2026-10-12 푸시 토큰 6빌드 낭비)
 - [병렬 Bash 는 절대 경로](feedback_absolute_paths_in_parallel_bash.md) — 호출 간 cwd 가 섞여 npm install 이 다른 repo 에 들어감, `git -C`·`cd /abs && …` 한 줄 안 (2026-10-12)
