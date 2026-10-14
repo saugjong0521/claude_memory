@@ -42,7 +42,7 @@
 - [보고서·문서형 산출물은 구현 전 한 절 목업으로 모양 확인](feedback_document_deliverable_mock_before_build.md) — "보고서/문서/온보딩" 은 흐름 순서의 서술형, 층 표 승인 ≠ 화면 승인, 기준은 트리 + 실제 건 예시 (2026-10-09 scope-validate 정합성 보고서 재구성 100만 토큰)
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
 - [Phase 별 진행은 협업](feedback_phase_progression_collaborative.md) — 각 phase 마다 사용자 입력, 자동 진행 금지
-- [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. no_repeat_decided_questions 와 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
+- [판단으로 분류한 건 작업 전에 선택지부터](feedback_judgment_items_ask_before_work.md) — 내가 "판단 필요"·"선택지를 드리겠다" 로 분류한 항목은 **파일 0 변경 상태에서** 선택지 제시. 작업해놓고 사후 승인 금지(되돌리는 비용을 사용자에게 넘김). 애매하면 판단 쪽으로. **실행 대상·비용이 대화의 대상보다 넓으면 실행 직전 한 줄 재고지**(승인 문단 안의 한 줄 ≠ 범위 확장 승인, 2026-10-13 Website 94회차 jev) no_repeat_decided_questions 와 상보 — "결정된 정책 자동 적용" vs "미결정을 대신 결정 금지"
 - [사용자 결정은 원문 quote 로 보존](feedback_preserve_decision_literal.md) — plan doc § 안에 자연어 원문
 - [조건은 모든 표면에 대해 확인](feedback_condition_applies_to_every_surface.md) — 노출·발생 조건을 받으면 진입 배너·선택 화면·본 화면·제출까지 표로 나열해 확인. 용어를 컴포넌트 하나에 혼자 대응 금지, 내가 정한 조건은 결정 항목으로, 진입점 ⊆ 완료 가능 (2026-09-29 현장 퀘스트 배너 3km↔10m)
 - ["없었다" 단정 전 대화 기록 원문 검색](feedback_search_transcripts_before_denying_history.md) — docs 는 내가 쓴 2차 사료. 사용자 기억을 가설로 두고 `~/.claude/projects/*.jsonl` 의 사용자 발화를 찾는다. "문서에 없다" ≠ "논의가 없었다" (2026-09-29)
