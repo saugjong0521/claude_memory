@@ -37,7 +37,7 @@
 - [사용자에게 보이는 출력은 전부 한국어](feedback_all_user_facing_output_in_korean.md) — 서브에이전트·워크플로 보고서도 포함, 프롬프트에 "보고서는 한국어로" 명시. **도구를 길게 돌린 뒤 최종 보고는 표 머리글·마지막 질문까지 한국어인지 다시 본다** (2026-10-21 ACL_mockup 최종 보고 영어 5회)
 - [변경의 종류를 구분해 보고](feedback_report_change_kind_precisely.md) — "있던 것을 바꿈 / 없던 것을 새로 둠 / 계획만 바꿈 / 내 임시물 정리" 구분, 없던 폴더를 "제거" 라 쓰지 않기 (2026-10-13)
 - [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만, "X 설명하고 진행" 은 설명→답변→정리→진행
-- [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기
+- [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기. **사용자가 운영·본인 몫으로 넘긴 건은 종결 — 이후 보고 목록에서 뺀다** (2026-10-20)
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
 - [보고서·문서형 산출물은 구현 전 한 절 목업으로 모양 확인](feedback_document_deliverable_mock_before_build.md) — "보고서/문서/온보딩" 은 흐름 순서의 서술형, 층 표 승인 ≠ 화면 승인, 기준은 트리 + 실제 건 예시 (2026-10-09 scope-validate 정합성 보고서 재구성 100만 토큰)
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
