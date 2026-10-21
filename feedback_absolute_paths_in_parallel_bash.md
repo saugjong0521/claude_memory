@@ -16,3 +16,6 @@ metadata:
 - 이상한 "파일 없음" 오류가 나면 코드보다 먼저 `pwd` 를 의심한다.
 
 관련: [[verify_edit_applied_before_reporting]], [[device_only_bug_instrument_before_guessing]]
+
+**재발 (2026-10-21 boomerang manage 앱)**: 병렬 Bash 두 개 중 하나가 `cd $M && cat > capacitor.config.json` 을 돌리는 사이 cwd 가 **frontend 체크아웃으로 리셋**돼 손님앱의 `capacitor.config.json` 을 매장 앱 값(appId town.boomerang.manage)으로 덮어썼고 `npx cap add android` 는 "이미 있음" 으로 실패해 들켰다. 커밋 전이라 `git checkout -- capacitor.config.json` 으로 복구. 같은 날 `scripts/build_android.sh` 도 상대 경로라 다른 repo 에서 "No such file" 로 실패.
+**추가 규칙**: 파일을 **쓰는** 명령(리다이렉션 `>`·heredoc·`cp`·스캐폴드 도구)은 병렬 호출에 넣지 않거나, 경로를 전부 절대 경로로 쓰고 **쓴 직후 `git status` 로 다른 repo 에 변화가 없는지** 본다. 스크립트 실행도 `/abs/path/script.sh` 로.
