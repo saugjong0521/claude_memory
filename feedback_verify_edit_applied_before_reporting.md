@@ -33,3 +33,4 @@ metadata:
 - cherry-pick 은 커밋 하나씩 `|| { echo CONFLICT; exit 1; }` — 파이프로 출력 필터링하지 말고 `set -o pipefail` 또는 결과를 변수로 받아 검사.
 - push 직전 `git log --oneline <base>..HEAD` 로 **적용된 커밋 수 == 의도한 수** 를 assert.
 - prod 제외 파일(카드 등록 등)을 건드리는 dev 커밋은 충돌이 정상 — `git rm <file>` + `cherry-pick --continue` 로 삭제 유지가 해소법. 라이브 번들 문자열 grep 은 마지막 안전망으로 계속 유지.
+- **빌드도 같은 함정 (2026-10-19 재발)** — boomerang 손님앱 main 반영에서 `npm run build 2>&1 | grep -E "built in|error" && git push` 로 묶어, 빌드 실패(main 에 없는 dev 전용 `constants/company` import)인데 grep 이 "error" 를 찾아 성공 → push → deploy-prd 실패(빌드 → 업로드 순이라 사이트 영향은 없었음). 빌드·린트는 `> log 2>&1; B=$?` 로 종료코드를 변수에 받아 **0 일 때만** 다음 명령. push 는 별도 명령으로 분리. dev 커밋을 main 에 옮길 땐 새 import 가 main 에 있는지(`git cat-file -e origin/main:<path>`)도 본다.
