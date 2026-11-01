@@ -6,7 +6,7 @@
 |---------|----------------|
 | **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean**, **judgment_items_ask_before_work** |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
-| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), **ask_before_screenshot_sweep**(전수 스크린샷은 묻고), **document_deliverable_mock_before_build**(보고서·문서·온보딩 화면), check_docs_000_first |
+| **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **no_em_dash_in_copy**("—" 금지), **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), **ask_before_screenshot_sweep**(전수 스크린샷은 묻고), **document_deliverable_mock_before_build**(보고서·문서·온보딩 화면), check_docs_000_first |
 | **유저 플로우/기능 변경** | ui_design_principles, **condition_applies_to_every_surface**, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
 | **설정값 추가** (env / config) | config_not_env_for_addresses |
 | **코드 검증 / 테스트 / "구현됐나" 확인** | verify_against_code_and_runtime, no_handtyped_dates_echo_inputs_on_empty, ask_before_screenshot_sweep (느린 전수 검수 전 확인) |
@@ -47,6 +47,7 @@
 - [조건은 모든 표면에 대해 확인](feedback_condition_applies_to_every_surface.md) — 노출·발생 조건을 받으면 진입 배너·선택 화면·본 화면·제출까지 표로 나열해 확인. 용어를 컴포넌트 하나에 혼자 대응 금지, 내가 정한 조건은 결정 항목으로, 진입점 ⊆ 완료 가능 (2026-09-29 현장 퀘스트 배너 3km↔10m)
 - ["없었다" 단정 전 대화 기록 원문 검색](feedback_search_transcripts_before_denying_history.md) — docs 는 내가 쓴 2차 사료. 사용자 기억을 가설로 두고 `~/.claude/projects/*.jsonl` 의 사용자 발화를 찾는다. "문서에 없다" ≠ "논의가 없었다" (2026-09-29)
 - [UI 설계 원칙](feedback_ui_design_principles.md) — 한 화면 한 판단(상태별), 소개↔입력 분리·긴 폼은 스텝 위저드, 목록은 표, 문구는 형제 양식(이모지 X), 버튼은 바탕과 구분. 지적받고 고치면 실패, 설명은 단어 자리에 힌트로(한 줄 몰아쓰기 X)
+- [화면·오류 문구에 "—" 금지](feedback_no_em_dash_in_copy.md) — 사용자 "이거 기호 너무 ai 스럽다, 메모리룰로 사용 금지". 마침표·줄바꿈·`*`·괄호·콜론으로, 빈 값은 "-". 09-11 "주문장 / — 설명" 패턴 대체 (2026-11-01)
 - [전수 스크린샷 검수는 돌리기 전에 묻기](feedback_ask_before_screenshot_sweep.md) — 문구·숫자 변경은 페이지 한 번 띄워 요소만 확인, 레이아웃 변경일 때만 전수 검수. 소요 시간 적어서 "할까요?" (2026-10-07 "스크린샷검수는 이번 변경서는 과함")
 - [웹앱(휴대폰+웹) 화면 규격](feedback_webapp_responsive_layout.md) — 유동형 + 기준 360 + 최소 344(아래는 가로 스크롤) + md 768, 글자 5단계(캡션 12·본문 14·제목 16), extrabold 금지, 카드 패딩 16, 한글 keep-all, 검수 344/360/390/820 스크린샷
 - [설정: 주소는 config, env 는 키만](feedback_config_not_env_for_addresses.md) — 환경 파생 상수는 APP_ENV 분기 property, env 는 시크릿·외부 발급값만
