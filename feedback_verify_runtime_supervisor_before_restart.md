@@ -38,3 +38,7 @@ originSessionId: 552687bc-ce8e-4bce-96e7-4e732ad1fbd9
    - **Why**: boomerang 프로젝트는 2026-09-09 폴더를 `boomerang-dev/` · `boomerang-prod/` 로 바꿨지만 systemd unit 은 옛 이름 `kstadium-shop-backend`(dev) · **`kstadium-shop-prd-backend`**(prd) 그대로다. 폴더명에서 유추해 `boomerang-prod-backend` 로 안내 → `Unit not found`. 폴더·repo·도메인 이름과 unit 이름은 **서로 독립**이고, 한 번 정착한 unit 이름은 폴더가 바뀌어도 안 바뀐다.
    - **2026-10-06 개편 뒤 현재값**: 폴더 `~/boomerang-shop/boomerang-shop-dev/`·`boomerang-shop-prod/`, unit `boomerang-shop-dev-backend`(dev :8003)·`boomerang-shop-prod-backend`(prod :8004), logrotate `/etc/logrotate.d/boomerang-shop`. 이름이 같은 축이 됐어도 **명령에 넣기 전 조회**는 그대로 한다 — 2026-10-06 이전 docs·대화에는 옛 이름이 그대로 남아 있다.
    - 환경 약어도 프로젝트마다 다르다 (이 프로젝트: 폴더 `prod`, unit·alembic·스크립트 `prd`). 명령에 쓸 이름은 항상 조회 결과를 그대로 복사한다.
+
+9. **재기동을 부탁한 뒤엔 다음 보고마다 supervisor 시각을 다시 보고, 이미 됐으면 다시 부탁하지 않는다** (2026-11-04 사용자 "재기동 아까부터 계속하고 있는데 확인안됨?"):
+   - **Why**: boomerang dev 등급 잠금 커밋(08:51) 직후 한 번만 `ActiveEnterTimestamp` 를 보고(08:18, 커밋 전) 이후 보고 세 번 내내 "재기동 대기" 를 반복했다. 사용자는 08:59·09:10·09:17·09:31 네 번 재기동해 두었다.
+   - **How**: 재기동 대기를 적기 직전에 `systemctl show <unit> -p ActiveEnterTimestamp` 를 커밋 시각과 비교한다. 커밋보다 뒤면 "재기동 확인(HH:MM)" 으로 바꾸고, 새 코드가 실렸는지 그 커밋에서 생긴 라우트(`/openapi.json`) 등 positive probe 로 확인한다.
