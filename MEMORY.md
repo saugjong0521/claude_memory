@@ -1,10 +1,11 @@
 ## 프로세스별 참조 가이드
 
-**지시를 받을 때마다** 그 지시의 성격을 아래 표에서 분류하고 해당 행의 `feedback_*` 파일을 read 한 뒤 진행한다. 맞는 행이 없으면 가장 가까운 룰을 적용하고 행 신설을 제안. 한 룰이 여러 행에 속할 수 있다.
+**지시를 받을 때마다** 그 지시의 성격을 아래 표에서 분류하고 해당 행의 `feedback_*` 파일을 read 한 뒤 진행한다. 맞는 행이 없으면 가장 가까운 룰을 적용하고 행 신설을 제안. 한 룰이 여러 행에 속할 수 있다. 작업 종류가 대화 중에 바뀌면(조사 → 사용자 정리 확인·문서 다듬기) 그 턴에 다시 분류한다 (2026-11-06).
 
 | Process | Read 필요 파일 |
 |---------|----------------|
 | **사용자 응답 전반** (질문·확인·컨펌 해석) | read_user_words_literally, no_repeat_decided_questions, explain_code_references, **all_user_facing_output_in_korean**, **judgment_items_ask_before_work** |
+| **사용자 정리 확인 · 보낼 문서 다듬기** (「맞는지 확인」, 초안 검토, 「이 말 필요?」) | **confirm_user_summary_and_draft**, read_user_words_literally, no_repeat_decided_questions, no_em_dash_in_copy (explain_with_business_logic 은 쓰지 않음) |
 | **코드 작업 시작** | plan_stage_no_implementation (착수 신호 게이트), check_docs_000_first, verify_against_code_and_runtime, check_design_history_before_changes, verify_edit_applied_before_reporting |
 | **UI 화면·문구·목록·폼** (신규 화면, 라벨, 명단, 신청 폼) | ui_design_principles, **no_em_dash_in_copy**("—" 금지), **condition_applies_to_every_surface**(노출·발생 조건), **webapp_responsive_layout**(휴대폰+웹 웹앱 규격), **ask_before_screenshot_sweep**(전수 스크린샷은 묻고), **document_deliverable_mock_before_build**(보고서·문서·온보딩 화면), check_docs_000_first |
 | **유저 플로우/기능 변경** | ui_design_principles, **condition_applies_to_every_surface**, sync_test_tools_with_feature_changes, cross_repo_audit_before_changes |
@@ -38,6 +39,7 @@
 - [변경의 종류를 구분해 보고](feedback_report_change_kind_precisely.md) — "있던 것을 바꿈 / 없던 것을 새로 둠 / 계획만 바꿈 / 내 임시물 정리" 구분, 없던 폴더를 "제거" 라 쓰지 않기 (2026-10-13)
 - [사용자 말은 그대로 읽는다](feedback_read_user_words_literally.md) — "있어?/확인해봐" 는 조사 보고까지, "지금/최신" 은 라이브 소스, 항목 N개면 답 N개(사용자 라벨 그대로), 책임 회피 단서 금지, "사용자 몫" 은 진짜 할 일만, "X 설명하고 진행" 은 설명→답변→정리→진행
 - [이미 결정된 사항 반복 질문·재보고 금지](feedback_no_repeat_decided_questions.md) — 기존 정책 자동 적용은 자체 판단 + 한 줄 안내. 종결된 건을 "새 발견" 으로 보고하지 않기. **사용자가 운영·본인 몫으로 넘긴 건은 종결 — 이후 보고 목록에서 뺀다** (2026-10-20) · **"같이 진행" 묶음에 든 항목의 시점을 다시 묻지 않기, 압축 뒤엔 원문 확인**(2026-10-21 P4)
+- [사용자 정리 확인·초안 다듬기](feedback_confirm_user_summary_and_draft.md) : 판단을 바꾸는 것만 정정, 필수/최적 분리, 「이 말 필요?」는 반복·문맥·근거 확인, 지적은 대상부터 특정 (2026-11-06)
 - [플랜 단계와 작업 단계 분리](feedback_plan_stage_no_implementation.md) — 플랜 중 "ㄱㄱ" 는 plan doc 반영까지, 구현은 명시 착수 신호 뒤. 단계 전환은 사용자만
 - [보고서·문서형 산출물은 구현 전 한 절 목업으로 모양 확인](feedback_document_deliverable_mock_before_build.md) — "보고서/문서/온보딩" 은 흐름 순서의 서술형, 층 표 승인 ≠ 화면 승인, 기준은 트리 + 실제 건 예시 (2026-10-09 scope-validate 정합성 보고서 재구성 100만 토큰)
 - [큰 개발은 착수 전 아티팩트 확인 문서](feedback_plan_review_artifact_before_work.md) — 흐름·돈·결정·분담 요약을 아티팩트로 최종 확인 (2026-08-19 템플릿)
